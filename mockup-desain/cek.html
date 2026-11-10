@@ -1,0 +1,442 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Cek Pesanan | ANS Mini Football</title>
+    <meta
+      name="description"
+      content="Cek status pesanan lapangan ANS Mini Football dengan kode booking."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --g: #2f6b3a;
+        --g7: #265730;
+        --bg: #fbfaf3;
+        --ink: #111311;
+        --mut: #6b6e6a;
+        --bd: #e1e3dd;
+        --cream: #f3f1e4;
+        --danger: #a32a1f;
+        --r-sec: 2rem;
+        --r-card: 1.5rem;
+        --shadow: 0 12px 40px rgb(17 19 17/0.14);
+        --pad: clamp(1.25rem, 3vw, 2.5rem);
+        --font: "Plus Jakarta Sans", system-ui, sans-serif;
+      }
+      * {
+        box-sizing: border-box;
+        margin: 0;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        font-family: var(--font);
+        background: var(--bg);
+        color: var(--ink);
+        -webkit-font-smoothing: antialiased;
+        line-height: 1.5;
+      }
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+      h1 {
+        font-size: clamp(2rem, 4.5vw, 3.25rem);
+        font-weight: 800;
+        line-height: 1.1;
+        letter-spacing: -0.025em;
+        text-wrap: balance;
+      }
+      p {
+        color: var(--mut);
+        text-wrap: pretty;
+      }
+      :focus-visible {
+        outline: 2px solid var(--g);
+        outline-offset: 3px;
+      }
+      [hidden] {
+        display: none !important;
+      }
+      .wrap {
+        max-width: 80rem;
+        margin-inline: auto;
+        padding-inline: var(--pad);
+      }
+      .i {
+        width: 1.15em;
+        height: 1.15em;
+        flex: none;
+        fill: none;
+        stroke: currentColor;
+        stroke-width: 2;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+      }
+
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 0.35rem 0.35rem 0.35rem 1.25rem;
+        border-radius: 999px;
+        background: var(--g);
+        color: #fff;
+        font: 600 0.875rem var(--font);
+        border: 0;
+        cursor: pointer;
+        transition: background 0.2s;
+      }
+      .btn:hover:not(:disabled) {
+        background: var(--g7);
+      }
+      .btn:disabled {
+        opacity: 0.45;
+        cursor: not-allowed;
+      }
+      .btn i {
+        display: grid;
+        place-items: center;
+        width: 2.25rem;
+        height: 2.25rem;
+        border-radius: 50%;
+        background: #fff;
+        color: var(--g);
+      }
+
+      .nav {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        padding-block: 1.25rem;
+      }
+      .logo {
+        font-weight: 800;
+        font-size: 1.25rem;
+        letter-spacing: -0.02em;
+      }
+      .menu {
+        display: flex;
+        align-items: center;
+        gap: 2rem;
+        font-size: 0.9rem;
+        font-weight: 500;
+      }
+      .menu a:not(.btn) {
+        color: var(--mut);
+      }
+      .menu a:not(.btn):hover,
+      .menu a[aria-current] {
+        color: var(--ink);
+      }
+      .menu a[aria-current] {
+        font-weight: 700;
+      }
+      @media (min-width: 56.01rem) {
+        .menu {
+          flex: 1;
+        }
+        .menu a:first-child,
+        .menu .btn {
+          margin-left: auto;
+        }
+      }
+      .mb {
+        display: none;
+        width: 2.75rem;
+        height: 2.75rem;
+        border-radius: 50%;
+        border: 1px solid var(--bd);
+        background: #fff;
+        place-items: center;
+        cursor: pointer;
+        color: var(--ink);
+      }
+
+      main {
+        display: grid;
+        place-items: center;
+        padding-block: clamp(1.5rem, 6vw, 4.5rem);
+      }
+      .panel {
+        width: min(100%, 36rem);
+        padding: clamp(1.5rem, 4vw, 2.5rem);
+        background: #fff;
+        border-radius: var(--r-sec);
+      }
+      .panel > p {
+        margin-top: 0.75rem;
+      }
+      form {
+        margin-top: 1.75rem;
+      }
+      .lab {
+        display: block;
+        margin-bottom: 0.6rem;
+        font-weight: 600;
+        font-size: 0.9rem;
+      }
+      .in {
+        width: 100%;
+        padding: 0.95rem 1.1rem;
+        border: 1px solid var(--bd);
+        border-radius: 1rem;
+        background: #fff;
+        font: 600 1rem var(--font);
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        color: var(--ink);
+      }
+      .in::placeholder {
+        text-transform: none;
+        letter-spacing: 0;
+        font-weight: 500;
+        color: #a5a89f;
+      }
+      .in:focus {
+        border-color: var(--g);
+      }
+      .in[aria-invalid="true"] {
+        border-color: var(--danger);
+      }
+      .alert {
+        display: flex;
+        align-items: flex-start;
+        gap: 0.6rem;
+        margin-top: 1rem;
+        padding: 0.9rem 1rem;
+        border-radius: 1rem;
+        background: #fdeaea;
+        color: var(--danger);
+        font-size: 0.9rem;
+        font-weight: 600;
+      }
+      .alert svg {
+        margin-top: 0.15rem;
+      }
+      .actions {
+        margin-top: 1.5rem;
+      }
+      .help {
+        margin-top: 1.5rem;
+        padding-top: 1.25rem;
+        border-top: 1px dashed var(--bd);
+        font-size: 0.875rem;
+      }
+      .help a {
+        color: var(--g);
+        font-weight: 600;
+      }
+      .help a:hover {
+        text-decoration: underline;
+      }
+      footer {
+        padding-block: 2.5rem;
+        font-size: 0.85rem;
+        color: var(--mut);
+      }
+
+      @media (max-width: 56rem) {
+        .mb {
+          display: grid;
+        }
+        .menu {
+          display: none;
+          position: absolute;
+          top: 100%;
+          left: var(--pad);
+          right: var(--pad);
+          flex-direction: column;
+          align-items: stretch;
+          gap: 0.25rem;
+          padding: 1rem;
+          border-radius: var(--r-card);
+          background: #fff;
+          box-shadow: var(--shadow);
+          z-index: 5;
+        }
+        .menu.open {
+          display: flex;
+        }
+        .menu a:not(.btn) {
+          padding: 0.7rem 0.5rem;
+        }
+        .menu .btn {
+          align-self: flex-start;
+          margin-top: 0.5rem;
+        }
+      }
+      @media (max-width: 40rem) {
+        .actions .btn {
+          width: 100%;
+          justify-content: space-between;
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        html {
+          scroll-behavior: auto;
+        }
+        * {
+          transition: none !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <svg width="0" height="0" style="position: absolute" aria-hidden="true">
+      <symbol id="ar" viewBox="0 0 24 24">
+        <path d="M7 17 17 7M8 7h9v9" />
+      </symbol>
+      <symbol id="al" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="9" />
+        <path d="M12 8v5M12 16.5v.01" />
+      </symbol>
+      <symbol id="mn" viewBox="0 0 24 24">
+        <path d="M4 7h16M4 12h16M4 17h16" />
+      </symbol>
+    </svg>
+
+    <header class="wrap nav">
+      <a class="logo" href="/">ANS Mini Football</a>
+      <button
+        class="mb"
+        id="mb"
+        aria-expanded="false"
+        aria-controls="menu"
+        aria-label="Buka menu"
+      >
+        <svg class="i"><use href="#mn" /></svg>
+      </button>
+      <nav class="menu" id="menu" aria-label="Navigasi utama">
+        <a href="/">Home</a>
+        <a href="/pesan-lapangan">Pesan Lapangan</a>
+        <a href="/cek-pesanan" aria-current="page">Cek Pesanan</a>
+        <a class="btn" href="#" data-wa target="_blank" rel="noopener"
+          >Hubungi Kami
+          <i
+            ><svg class="i"><use href="#ar" /></svg></i
+        ></a>
+      </nav>
+    </header>
+
+    <main class="wrap">
+      <section class="panel" aria-labelledby="t">
+        <h1 id="t">Cek Pesanan</h1>
+        <p>Masukkan kode booking untuk melihat status pesanan</p>
+
+        <form id="f" novalidate>
+          <label class="lab" for="kode">Kode Booking</label>
+          <input
+            class="in"
+            id="kode"
+            name="kode"
+            autocomplete="off"
+            autocapitalize="characters"
+            spellcheck="false"
+            placeholder="Contoh: ANS-7K3M9Q"
+            aria-describedby="alert"
+          />
+          <div class="alert" id="alert" role="alert" hidden>
+            <svg class="i"><use href="#al" /></svg><span id="msg"></span>
+          </div>
+          <div class="actions">
+            <button class="btn" type="submit" id="go">
+              Cek Pesanan
+              <i
+                ><svg class="i"><use href="#ar" /></svg
+              ></i>
+            </button>
+          </div>
+        </form>
+
+        <p class="help">Kode booking dikirim setelah kamu memesan lapangan</p>
+      </section>
+    </main>
+
+    <footer class="wrap">
+      © 2026 ANS Mini Football. Hak cipta dilindungi.
+    </footer>
+
+    <script>
+      const DETAIL = "/booking-detail"; // halaman detail pesanan
+      const WA =
+        "https://wa.me/6281234567890?text=" +
+        encodeURIComponent(
+          "Halo admin ANS Mini Football, saya lupa kode booking saya.",
+        );
+      const $ = (id) => document.getElementById(id);
+      document.querySelectorAll("[data-wa]").forEach((a) => (a.href = WA));
+
+      const mb = $("mb"),
+        mn = $("menu");
+      mb.onclick = () =>
+        mb.setAttribute("aria-expanded", mn.classList.toggle("open"));
+
+      /* Cari pesanan berdasarkan kode booking. Mengembalikan URL halaman detail, atau null bila tidak ada.
+   DEMO: mencari di localStorage (pesanan yang dibuat di browser ini lewat halaman detail).
+   TODO: ganti dengan query ke backend, misalnya:
+   const { data } = await supabase.from("bookings").select("kode").eq("kode", kode).maybeSingle();
+   return data ? `${DETAIL}?kode=${encodeURIComponent(kode)}` : null; */
+      async function findBooking(kode) {
+        try {
+          for (let i = 0; i < localStorage.length; i++) {
+            const k = localStorage.key(i);
+            if (!k || !k.startsWith("ans-bk-")) continue;
+            const b = JSON.parse(localStorage.getItem(k));
+            if (b && String(b.kode).toUpperCase() === kode)
+              return DETAIL + "?" + k.slice(7);
+          }
+        } catch (e) {}
+        return null;
+      }
+
+      const inp = $("kode"),
+        box = $("alert"),
+        go = $("go");
+      function showErr(m) {
+        $("msg").textContent = m;
+        box.hidden = false;
+        inp.setAttribute("aria-invalid", "true");
+      }
+      function clearErr() {
+        box.hidden = true;
+        inp.removeAttribute("aria-invalid");
+      }
+      inp.oninput = clearErr;
+
+      $("f").onsubmit = async (e) => {
+        e.preventDefault();
+        const kode = inp.value.replace(/\s+/g, "").toUpperCase();
+        if (!kode) {
+          showErr("Masukkan kode booking terlebih dahulu.");
+          inp.focus();
+          return;
+        }
+        clearErr();
+        go.disabled = true;
+        go.firstChild.textContent = "Memeriksa… ";
+        const url = await findBooking(kode);
+        if (url) {
+          location.href = url;
+          return;
+        }
+        go.disabled = false;
+        go.firstChild.textContent = "Cek Pesanan ";
+        showErr(
+          "Kode booking tidak ditemukan. Periksa kembali kode yang kamu masukkan.",
+        );
+        inp.focus();
+      };
+    </script>
+  </body>
+</html>

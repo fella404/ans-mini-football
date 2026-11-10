@@ -1,0 +1,1135 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>ANS Mini Football | Pesan Lapangan Online</title>
+    <meta
+      name="description"
+      content="Pesan lapangan mini football secara online. Cek slot, booking, dan konfirmasi instan."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --g: #2f6b3a;
+        --g7: #265730;
+        --bg: #fbfaf3;
+        --ink: #111311;
+        --mut: #6b6e6a;
+        --bd: #e1e3dd;
+        --star: #f5b81c;
+        --r-sec: 2rem;
+        --r-card: 1.5rem;
+        --r-med: 1.25rem;
+        --shadow: 0 12px 40px rgb(17 19 17/0.14);
+        --pad: clamp(1.25rem, 3vw, 2.5rem);
+        --font: "Plus Jakarta Sans", system-ui, sans-serif;
+      }
+      * {
+        box-sizing: border-box;
+        margin: 0;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        font-family: var(--font);
+        background: var(--bg);
+        color: var(--ink);
+        -webkit-font-smoothing: antialiased;
+        line-height: 1.5;
+      }
+      img,
+      iframe {
+        display: block;
+        max-width: 100%;
+      }
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+      ul {
+        list-style: none;
+        padding: 0;
+      }
+      h1,
+      h2,
+      h3 {
+        line-height: 1.1;
+        letter-spacing: -0.025em;
+        text-wrap: balance;
+      }
+      h1 {
+        font-size: clamp(2.5rem, 6vw, 4.5rem);
+        font-weight: 800;
+      }
+      h2 {
+        font-size: clamp(1.75rem, 3.2vw, 2.75rem);
+        font-weight: 700;
+      }
+      h3 {
+        font-size: clamp(1.25rem, 2vw, 1.6rem);
+        font-weight: 700;
+      }
+      p {
+        color: var(--mut);
+        text-wrap: pretty;
+      }
+      :focus-visible {
+        outline: 2px solid var(--g);
+        outline-offset: 3px;
+      }
+      .wrap {
+        max-width: 80rem;
+        margin-inline: auto;
+        padding-inline: var(--pad);
+      }
+      .sec {
+        margin-top: clamp(2.5rem, 6vw, 5rem);
+      }
+      .i {
+        width: 1.15em;
+        height: 1.15em;
+        flex: none;
+        fill: none;
+        stroke: currentColor;
+        stroke-width: 2;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+      }
+      .star {
+        fill: var(--star);
+        stroke: none;
+      }
+
+      /* Tombol pill + lingkaran panah */
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 0.35rem 0.35rem 0.35rem 1.25rem;
+        border-radius: 999px;
+        background: var(--g);
+        color: #fff;
+        font: 600 0.875rem var(--font);
+        border: 0;
+        cursor: pointer;
+        transition: background 0.2s;
+      }
+      .btn:hover {
+        background: var(--g7);
+      }
+      .btn i {
+        display: grid;
+        place-items: center;
+        width: 2.25rem;
+        height: 2.25rem;
+        border-radius: 50%;
+        background: #fff;
+        color: var(--g);
+        font-size: 1rem;
+      }
+      .btn.light {
+        background: #fff;
+        color: var(--ink);
+      }
+      .btn.light:hover {
+        background: #f3f1e4;
+      }
+      .btn.light i {
+        background: var(--g);
+        color: #fff;
+      }
+      .circle {
+        display: grid;
+        place-items: center;
+        width: 3rem;
+        height: 3rem;
+        border-radius: 50%;
+        border: 1px solid var(--bd);
+        background: #fff;
+        color: var(--ink);
+        cursor: pointer;
+        transition: background 0.2s;
+      }
+      .circle.solid {
+        background: var(--g);
+        border-color: var(--g);
+        color: #fff;
+      }
+      .circle:hover {
+        background: #f3f1e4;
+      }
+      .circle.solid:hover {
+        background: var(--g7);
+      }
+      .controls {
+        display: flex;
+        gap: 0.6rem;
+      }
+
+      /* Hero */
+      .hero {
+        position: relative;
+        min-height: min(100svh, 54rem);
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        color: #fff;
+        isolation: isolate;
+        background: #274a2c
+          url("https://images.unsplash.com/photo-1574629810360-7efbbe195018?auto=format&fit=crop&w=1800&q=80")
+          center/cover;
+      }
+      .hero::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: -1;
+        background: linear-gradient(
+          180deg,
+          rgb(0 0 0/0.6),
+          rgb(0 0 0/0.15) 45%,
+          rgb(0 0 0/0.6)
+        );
+      }
+      .hero > .wrap {
+        width: 100%;
+      }
+      .nav {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        padding-block: 1.25rem;
+      }
+      .logo {
+        font-weight: 800;
+        font-size: 1.25rem;
+        letter-spacing: -0.02em;
+      }
+      .menu {
+        display: flex;
+        align-items: center;
+        gap: 2rem;
+        font-size: 0.9rem;
+        font-weight: 500;
+      }
+      .menu a {
+        opacity: 0.85;
+      }
+      .menu a:hover,
+      .menu a[aria-current] {
+        opacity: 1;
+      }
+      .menu a[aria-current] {
+        font-weight: 700;
+      }
+      @media (min-width: 56.01rem) {
+        .menu {
+          flex: 1;
+        }
+        .menu a:first-child,
+        .menu .btn {
+          margin-left: auto;
+        }
+      }
+      .mb {
+        display: none;
+        width: 2.75rem;
+        height: 2.75rem;
+        border-radius: 50%;
+        border: 1px solid rgb(255 255 255/0.5);
+        background: rgb(255 255 255/0.15);
+        color: #fff;
+        place-items: center;
+        cursor: pointer;
+      }
+      .hero-body {
+        padding-block: clamp(3rem, 8vw, 6rem) 1rem;
+      }
+      .badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.4rem 0.9rem;
+        margin-bottom: 1.25rem;
+        border-radius: 999px;
+        background: rgb(255 255 255/0.18);
+        backdrop-filter: blur(10px);
+        font-size: 0.85rem;
+        font-weight: 500;
+      }
+      .hero h1 {
+        max-width: 13ch;
+      }
+      .hero-body p {
+        max-width: 32rem;
+        margin-top: 1.25rem;
+        color: rgb(255 255 255/0.88);
+      }
+      .slot {
+        margin-bottom: clamp(1.25rem, 3vw, 2.5rem);
+        padding: 1.25rem 1.5rem;
+        border-radius: var(--r-card);
+        background: rgb(255 255 255/0.78);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        border: 1px solid rgb(255 255 255/0.55);
+        box-shadow: var(--shadow);
+        color: var(--ink);
+      }
+      .slot h2 {
+        font-size: 1.1rem;
+        margin-bottom: 0.9rem;
+      }
+      .slot form {
+        display: grid;
+        grid-template-columns: 1.3fr repeat(3, 1fr) auto;
+        gap: 0.75rem;
+        align-items: center;
+      }
+      .f {
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
+        padding: 0.75rem 1rem;
+        background: #fff;
+        border: 1px solid var(--bd);
+        border-radius: 999px;
+        color: var(--g);
+      }
+      .f:focus-within {
+        outline: 2px solid var(--g);
+      }
+      .f input,
+      .f select {
+        width: 100%;
+        border: 0;
+        outline: 0;
+        background: none;
+        font: 500 0.875rem var(--font);
+        color: var(--ink);
+      }
+
+      /* Pilihan lapangan */
+      .fields {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1.7fr);
+        gap: var(--pad);
+        align-items: stretch;
+      }
+      .fields .intro {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        gap: 2rem;
+      }
+      .fields .intro p {
+        margin-top: 1rem;
+        max-width: 24rem;
+      }
+      .track {
+        display: flex;
+        gap: 1rem;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        scrollbar-width: none;
+      }
+      .track::-webkit-scrollbar {
+        display: none;
+      }
+      .slide {
+        flex: 0 0 100%;
+        scroll-snap-align: start;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1.25rem;
+        padding: 1rem;
+        background: #fff;
+        border-radius: var(--r-sec);
+      }
+      .slide img {
+        width: 100%;
+        height: auto;
+        aspect-ratio: 4/3;
+        object-fit: cover;
+        object-position: center;
+        border-radius: var(--r-med);
+        background: #e8e5d2;
+      }
+      .info {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        gap: 1.25rem;
+        padding: 0.5rem 0.5rem 0.5rem 0;
+      }
+      .loc {
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
+        font-size: 0.8rem;
+        font-weight: 600;
+      }
+      .info h3 {
+        margin: 0.75rem 0 0.5rem;
+      }
+      .info .row {
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-between;
+        gap: 1rem;
+      }
+      .rating strong {
+        display: block;
+        font-size: clamp(2rem, 3vw, 2.5rem);
+        line-height: 1;
+        font-weight: 700;
+        letter-spacing: -0.02em;
+      }
+      .rating .stars {
+        justify-content: flex-start;
+        margin: 0.35rem 0;
+      }
+      .rating small {
+        display: block;
+        font-size: 0.9rem;
+        color: var(--mut);
+      }
+      .info .btn {
+        font-size: 0.8rem;
+      }
+
+      /* Testimonial */
+      .thead {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: flex-end;
+        justify-content: space-between;
+        gap: 1.25rem;
+        margin-bottom: 1.5rem;
+      }
+      .thead .r {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.75rem;
+        max-width: 18rem;
+      }
+      .tbody {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+        gap: 1rem;
+      }
+      .tphoto {
+        position: relative;
+        min-height: 16rem;
+        border-radius: var(--r-sec);
+        background: #274a2c
+          url("https://images.unsplash.com/photo-1431324155629-1a6deb1dec8d?auto=format&fit=crop&w=900&q=80")
+          center/cover;
+      }
+      .tphoto .circle {
+        position: absolute;
+        right: 1rem;
+        bottom: 1rem;
+        background: #fff;
+        color: var(--g);
+      }
+      .tcard {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        gap: 2rem;
+        padding: clamp(1.25rem, 3vw, 2rem);
+        background: #fff;
+        border-radius: var(--r-sec);
+      }
+      .tcard blockquote {
+        font-size: clamp(1.1rem, 2vw, 1.5rem);
+        font-weight: 500;
+        line-height: 1.35;
+        letter-spacing: -0.01em;
+      }
+      .tfoot {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+      }
+      .tfoot b {
+        display: block;
+      }
+      .rate {
+        text-align: right;
+      }
+      .rate strong {
+        font-size: clamp(1.75rem, 3vw, 2.5rem);
+        line-height: 1;
+      }
+      .stars {
+        display: flex;
+        gap: 0.15rem;
+        justify-content: flex-end;
+        margin-top: 0.25rem;
+      }
+      .tctl {
+        display: flex;
+        justify-content: flex-end;
+        margin-top: 1.25rem;
+      }
+
+      /* CTA */
+      .cta {
+        position: relative;
+        min-height: clamp(26rem, 52vw, 34rem);
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        gap: 2rem;
+        padding: var(--pad);
+        border-radius: var(--r-sec);
+        overflow: hidden;
+        color: #fff;
+        isolation: isolate;
+        background: #274a2c
+          url("https://images.unsplash.com/photo-1522778119026-d647f0596c20?auto=format&fit=crop&w=1800&q=80")
+          center/cover;
+      }
+      .cta::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: -1;
+        background: linear-gradient(90deg, rgb(0 0 0/0.6), rgb(0 0 0/0.1));
+      }
+      .cta h2 {
+        font-size: clamp(2rem, 5vw, 3.75rem);
+        max-width: 13ch;
+      }
+      .cta .card {
+        align-self: flex-start;
+        display: grid;
+        gap: 1rem;
+        padding: 1.25rem;
+        min-width: 14rem;
+        border-radius: var(--r-card);
+        background: rgb(255 255 255/0.85);
+        backdrop-filter: blur(14px);
+        color: var(--ink);
+      }
+      .cta .card b {
+        font-size: 1.05rem;
+        line-height: 1.25;
+      }
+
+      /* Footer */
+      footer {
+        margin-block: var(--pad);
+      }
+      .foot {
+        padding: clamp(1.5rem, 4vw, 3rem);
+        background: #fff;
+        border-radius: var(--r-sec);
+      }
+      .fgrid {
+        display: grid;
+        grid-template-columns: 1.6fr 1fr 1fr;
+        gap: 2rem;
+      }
+      .foot .brand {
+        font-size: clamp(1.75rem, 3vw, 2.25rem);
+        font-weight: 800;
+        letter-spacing: -0.03em;
+      }
+      .foot p {
+        margin-top: 0.5rem;
+      }
+      .foot h3 {
+        font-size: 0.95rem;
+        margin-bottom: 0.9rem;
+      }
+      .foot li {
+        margin-bottom: 0.55rem;
+        font-size: 0.9rem;
+        color: var(--mut);
+      }
+      .foot li a:hover {
+        color: var(--g);
+      }
+      .copy {
+        margin-top: 2.5rem;
+        padding-top: 1.25rem;
+        border-top: 1px solid var(--bd);
+        font-size: 0.85rem;
+        color: var(--mut);
+      }
+
+      @media (max-width: 70rem) {
+        .slot form {
+          grid-template-columns: 1fr 1fr;
+        }
+        .slot .btn {
+          grid-column: 1/-1;
+          justify-content: space-between;
+        }
+      }
+      @media (max-width: 56rem) {
+        .mb {
+          display: grid;
+        }
+        .menu {
+          display: none;
+          position: absolute;
+          top: 100%;
+          left: 0;
+          right: 0;
+          flex-direction: column;
+          align-items: stretch;
+          gap: 0.25rem;
+          padding: 1rem;
+          border-radius: var(--r-card);
+          background: rgb(17 19 17/0.88);
+          backdrop-filter: blur(14px);
+          z-index: 5;
+        }
+        .menu.open {
+          display: flex;
+        }
+        .menu a {
+          padding: 0.7rem 0.5rem;
+        }
+        .menu .btn {
+          align-self: flex-start;
+          margin-top: 0.5rem;
+        }
+        .slot form {
+          grid-template-columns: 1fr 1fr;
+        }
+        .slot .btn {
+          grid-column: 1/-1;
+          justify-content: space-between;
+        }
+        .fields,
+        .tbody {
+          grid-template-columns: 1fr;
+        }
+        .tphoto {
+          min-height: 13rem;
+        }
+        .fgrid {
+          grid-template-columns: 1fr 1fr;
+        }
+        .fgrid > div:first-child {
+          grid-column: 1/-1;
+        }
+      }
+      @media (max-width: 40rem) {
+        .slot form {
+          grid-template-columns: 1fr;
+        }
+        .slide {
+          grid-template-columns: 1fr;
+        }
+        .slide img {
+          aspect-ratio: 16/10;
+        }
+        .info {
+          padding: 0 0.25rem 0.25rem;
+        }
+        .rate {
+          text-align: left;
+        }
+        .stars {
+          justify-content: flex-start;
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        html {
+          scroll-behavior: auto;
+        }
+        * {
+          transition: none !important;
+        }
+        .track {
+          scroll-behavior: auto;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <svg width="0" height="0" style="position: absolute" aria-hidden="true">
+      <symbol id="ar" viewBox="0 0 24 24">
+        <path d="M7 17 17 7M8 7h9v9" />
+      </symbol>
+      <symbol id="l" viewBox="0 0 24 24">
+        <path d="M19 12H5m6-6-6 6 6 6" />
+      </symbol>
+      <symbol id="r" viewBox="0 0 24 24">
+        <path d="M5 12h14m-6-6 6 6-6 6" />
+      </symbol>
+      <symbol id="pin" viewBox="0 0 24 24">
+        <path d="M12 21s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11Z" />
+        <circle cx="12" cy="10" r="2.5" />
+      </symbol>
+      <symbol id="cal" viewBox="0 0 24 24">
+        <rect x="3" y="5" width="18" height="16" rx="3" />
+        <path d="M8 3v4M16 3v4M3 10h18" />
+      </symbol>
+      <symbol id="clk" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="9" />
+        <path d="M12 7v5l3 2" />
+      </symbol>
+      <symbol id="tm" viewBox="0 0 24 24">
+        <path d="M9 3h6M12 10v4l2 2" />
+        <circle cx="12" cy="14" r="7" />
+      </symbol>
+      <symbol id="mn" viewBox="0 0 24 24">
+        <path d="M4 7h16M4 12h16M4 17h16" />
+      </symbol>
+      <symbol id="st" viewBox="0 0 24 24">
+        <path
+          d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1-4.4-4.3 6.1-.9z"
+        />
+      </symbol>
+    </svg>
+
+    <!-- HERO -->
+    <section class="hero" id="home">
+      <header class="wrap nav">
+        <a class="logo" href="#home">ANS Mini Football</a>
+        <button
+          class="mb"
+          id="mb"
+          aria-expanded="false"
+          aria-controls="menu"
+          aria-label="Buka menu"
+        >
+          <svg class="i"><use href="#mn" /></svg>
+        </button>
+        <nav class="menu" id="menu" aria-label="Navigasi utama">
+          <a href="#home" aria-current="page">Home</a>
+          <a href="/pesan-lapangan">Pesan Lapangan</a>
+          <a href="/cek-pesanan">Cek Pesanan</a>
+          <a class="btn light" href="#" data-wa target="_blank" rel="noopener"
+            >Hubungi Kami
+            <i
+              ><svg class="i"><use href="#ar" /></svg></i
+          ></a>
+        </nav>
+      </header>
+
+      <div class="wrap hero-body">
+        <span class="badge"
+          ><svg class="i"><use href="#pin" /></svg>Booking online, konfirmasi
+          instan</span
+        >
+        <h1>Pesan Lapangan Mini Football Favoritmu</h1>
+        <p>
+          Cek slot kosong, pilih jam main, dan bayar langsung dari ponselmu.
+          Tanpa chat berulang, tanpa bentrok jadwal.
+        </p>
+      </div>
+
+      <div class="wrap">
+        <div class="slot">
+          <h2>Booking Slot Cepat</h2>
+          <form action="/pesan-lapangan" method="get">
+            <label class="f"
+              ><svg class="i"><use href="#pin" /></svg>
+              <select name="lapangan" aria-label="Pilih lapangan">
+                <option value="pancasila">Lapangan ANS Pancasila</option>
+                <option value="untan">Lapangan ANS Untan</option>
+              </select></label
+            >
+            <label class="f"
+              ><svg class="i"><use href="#cal" /></svg
+              ><input
+                type="date"
+                id="tgl"
+                name="tanggal"
+                aria-label="Tanggal main"
+                required
+            /></label>
+            <label class="f"
+              ><svg class="i"><use href="#clk" /></svg
+              ><input
+                type="time"
+                name="jam"
+                value="19:00"
+                aria-label="Jam mulai"
+                required
+            /></label>
+            <label class="f"
+              ><svg class="i"><use href="#tm" /></svg>
+              <select name="durasi" aria-label="Durasi main">
+                <option value="1">1 Jam</option>
+                <option value="2">2 Jam</option>
+                <option value="3">3 Jam</option>
+              </select></label
+            >
+            <button class="btn" type="submit">
+              Konfirmasi
+              <i
+                ><svg class="i"><use href="#ar" /></svg
+              ></i>
+            </button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <main>
+      <!-- PILIHAN LAPANGAN -->
+      <section class="wrap sec" aria-labelledby="t-fields">
+        <div class="fields">
+          <div class="intro">
+            <div>
+              <h2 id="t-fields">Pilih Lapangan yang Cocok untuk Timmu</h2>
+              <p>
+                Geser untuk melihat lapangan yang tersedia, lengkap dengan
+                lokasi di Google Maps.
+              </p>
+            </div>
+            <div class="controls">
+              <button class="circle" id="pv" aria-label="Lapangan sebelumnya">
+                <svg class="i"><use href="#l" /></svg>
+              </button>
+              <button
+                class="circle solid"
+                id="nx"
+                aria-label="Lapangan berikutnya"
+              >
+                <svg class="i"><use href="#r" /></svg>
+              </button>
+            </div>
+          </div>
+          <div class="track" id="tr" tabindex="0" aria-label="Daftar lapangan">
+            <!-- Ganti q= dengan nama/alamat lokasi sebenarnya -->
+            <article class="slide">
+              <img
+                loading="lazy"
+                alt="Lapangan A"
+                src="https://images.unsplash.com/photo-1579952363873-27f3bade9f55?auto=format&fit=crop&w=800&q=80"
+              />
+              <div class="info">
+                <div>
+                  <span class="loc"
+                    ><svg class="i"><use href="#pin" /></svg>ANS Mini
+                    Football</span
+                  >
+                  <h3>Lapangan A</h3>
+                </div>
+                <div class="row">
+                  <div class="rating">
+                    <strong>4.6</strong>
+                    <div class="stars">
+                      <svg class="i star"><use href="#st" /></svg
+                      ><svg class="i star"><use href="#st" /></svg
+                      ><svg class="i star"><use href="#st" /></svg
+                      ><svg class="i star"><use href="#st" /></svg
+                      ><svg class="i star" style="fill: #c9ccc6">
+                        <use href="#st" />
+                      </svg>
+                    </div>
+                    <small>133 Reviews</small>
+                  </div>
+                  <a
+                    class="circle solid"
+                    href="https://maps.google.com/?q=ANS+Mini+Football"
+                    target="_blank"
+                    rel="noopener"
+                    aria-label="Buka Lapangan A di Google Maps"
+                    ><svg class="i"><use href="#ar" /></svg
+                  ></a>
+                </div>
+              </div>
+            </article>
+            <article class="slide">
+              <img
+                loading="lazy"
+                alt="Lapangan B"
+                src="https://images.unsplash.com/photo-1551958219-acbc608c6377?auto=format&fit=crop&w=800&q=80"
+              />
+              <div class="info">
+                <div>
+                  <span class="loc"
+                    ><svg class="i"><use href="#pin" /></svg>ANS Mini
+                    Football</span
+                  >
+                  <h3>Lapangan B</h3>
+                </div>
+                <div class="row">
+                  <div class="rating">
+                    <strong>4.8</strong>
+                    <div class="stars">
+                      <svg class="i star"><use href="#st" /></svg
+                      ><svg class="i star"><use href="#st" /></svg
+                      ><svg class="i star"><use href="#st" /></svg
+                      ><svg class="i star"><use href="#st" /></svg
+                      ><svg class="i star" style="fill: #c9ccc6">
+                        <use href="#st" />
+                      </svg>
+                    </div>
+                    <small>98 Reviews</small>
+                  </div>
+                  <a
+                    class="circle solid"
+                    href="https://maps.google.com/?q=ANS+Mini+Football"
+                    target="_blank"
+                    rel="noopener"
+                    aria-label="Buka Lapangan B di Google Maps"
+                    ><svg class="i"><use href="#ar" /></svg
+                  ></a>
+                </div>
+              </div>
+            </article>
+            <article class="slide">
+              <img
+                loading="lazy"
+                alt="Lapangan C"
+                src="https://images.unsplash.com/photo-1553778263-73a83bab9b0c?auto=format&fit=crop&w=800&q=80"
+              />
+              <div class="info">
+                <div>
+                  <span class="loc"
+                    ><svg class="i"><use href="#pin" /></svg>ANS Mini
+                    Football</span
+                  >
+                  <h3>Lapangan C</h3>
+                </div>
+                <div class="row">
+                  <div class="rating">
+                    <strong>4.5</strong>
+                    <div class="stars">
+                      <svg class="i star"><use href="#st" /></svg
+                      ><svg class="i star"><use href="#st" /></svg
+                      ><svg class="i star"><use href="#st" /></svg
+                      ><svg class="i star"><use href="#st" /></svg
+                      ><svg class="i star" style="fill: #c9ccc6">
+                        <use href="#st" />
+                      </svg>
+                    </div>
+                    <small>76 Reviews</small>
+                  </div>
+                  <a
+                    class="circle solid"
+                    href="https://maps.google.com/?q=ANS+Mini+Football"
+                    target="_blank"
+                    rel="noopener"
+                    aria-label="Buka Lapangan C di Google Maps"
+                    ><svg class="i"><use href="#ar" /></svg
+                  ></a>
+                </div>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- TESTIMONIAL -->
+      <section class="wrap sec" aria-labelledby="t-testi">
+        <div class="thead">
+          <h2 id="t-testi">Pengalaman Mereka Main di ANS Mini Football</h2>
+          <div class="r">
+            <p>
+              Lihat bagaimana booking instan membuat jadwal main lebih mudah.
+            </p>
+            <a class="btn" href="/pesan-lapangan"
+              >Pesan Sekarang
+              <i
+                ><svg class="i"><use href="#ar" /></svg></i
+            ></a>
+          </div>
+        </div>
+        <div class="tbody">
+          <div
+            class="tphoto"
+            role="img"
+            aria-label="Pemain mini football di lapangan"
+          >
+            <a class="circle" href="/pesan-lapangan" aria-label="Pesan lapangan"
+              ><svg class="i"><use href="#ar" /></svg
+            ></a>
+          </div>
+          <figure class="tcard" aria-live="polite">
+            <blockquote id="tq"></blockquote>
+            <figcaption class="tfoot">
+              <div>
+                <b id="tn"></b
+                ><span class="loc" style="font-weight: 500; color: var(--mut)"
+                  ><svg class="i"><use href="#pin" /></svg><span id="tt"></span
+                ></span>
+              </div>
+              <div class="rate">
+                <strong>5.0</strong>
+                <div class="stars">
+                  <svg class="i star"><use href="#st" /></svg
+                  ><svg class="i star"><use href="#st" /></svg
+                  ><svg class="i star"><use href="#st" /></svg
+                  ><svg class="i star"><use href="#st" /></svg
+                  ><svg class="i star"><use href="#st" /></svg>
+                </div>
+              </div>
+            </figcaption>
+          </figure>
+        </div>
+        <div class="tctl controls">
+          <button class="circle" id="tp" aria-label="Testimoni sebelumnya">
+            <svg class="i"><use href="#l" /></svg>
+          </button>
+          <button
+            class="circle solid"
+            id="tx"
+            aria-label="Testimoni berikutnya"
+          >
+            <svg class="i"><use href="#r" /></svg>
+          </button>
+        </div>
+      </section>
+
+      <!-- CTA -->
+      <section class="wrap sec" aria-labelledby="t-cta">
+        <div class="cta">
+          <h2 id="t-cta">
+            Hindari Bentrok Jadwal, Booking Slot Kosong Sekarang
+          </h2>
+          <div class="card">
+            <b>Akses Instan,<br />Pesan Lapanganmu</b>
+            <a class="btn" href="/pesan-lapangan"
+              >Book Now
+              <i
+                ><svg class="i"><use href="#ar" /></svg></i
+            ></a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="wrap">
+      <div class="foot">
+        <div class="fgrid">
+          <div>
+            <div class="brand">ANS Mini Football</div>
+            <p>Lapanganmu. Waktumu. Sekarang.</p>
+          </div>
+          <nav aria-label="Navigasi footer">
+            <h3>Navigasi</h3>
+            <ul>
+              <li><a href="#home">Home</a></li>
+              <li><a href="/pesan-lapangan">Pesan Lapangan</a></li>
+              <li><a href="/cek-pesanan">Cek Pesanan</a></li>
+              <li>
+                <a href="#" data-wa target="_blank" rel="noopener"
+                  >Hubungi Admin</a
+                >
+              </li>
+            </ul>
+          </nav>
+          <div>
+            <h3>Media Sosial</h3>
+            <ul>
+              <li>
+                <a href="https://instagram.com/" target="_blank" rel="noopener"
+                  >Instagram</a
+                >
+              </li>
+              <li>
+                <a href="https://facebook.com/" target="_blank" rel="noopener"
+                  >Facebook</a
+                >
+              </li>
+              <li>
+                <a href="https://tiktok.com/" target="_blank" rel="noopener"
+                  >TikTok</a
+                >
+              </li>
+              <li>
+                <a href="#" data-wa target="_blank" rel="noopener">WhatsApp</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="copy">© 2026 ANS Mini Football. Hak cipta dilindungi.</div>
+      </div>
+    </footer>
+
+    <script>
+      // Ganti nomor WhatsApp admin (format internasional, tanpa +)
+      const WA =
+        "https://wa.me/6281234567890?text=" +
+        encodeURIComponent(
+          "Halo admin ANS Mini Football, saya ingin bertanya tentang pemesanan lapangan.",
+        );
+      document.querySelectorAll("[data-wa]").forEach((a) => (a.href = WA));
+
+      // Tanggal default hari ini
+      const tgl = document.getElementById("tgl");
+      tgl.min = tgl.value = new Date().toLocaleDateString("sv-SE");
+
+      // Menu mobile
+      const mb = document.getElementById("mb"),
+        mn = document.getElementById("menu");
+      mb.onclick = () =>
+        mb.setAttribute("aria-expanded", mn.classList.toggle("open"));
+      mn.addEventListener("click", (e) => {
+        if (e.target.closest("a")) {
+          mn.classList.remove("open");
+          mb.setAttribute("aria-expanded", "false");
+        }
+      });
+
+      // Carousel lapangan
+      const tr = document.getElementById("tr");
+      document.getElementById("pv").onclick = () =>
+        tr.scrollBy({ left: -(tr.clientWidth + 16), behavior: "smooth" });
+      document.getElementById("nx").onclick = () =>
+        tr.scrollBy({ left: tr.clientWidth + 16, behavior: "smooth" });
+
+      // Testimonial (contoh, ganti dengan testimoni asli)
+      const T = [
+        {
+          q: "“Dulu pesan lapangan harus bolak-balik chat dan menunggu balasan. Sekarang pilih jam, bayar, dan konfirmasi langsung masuk. Sangat membantu untuk kapten tim yang sibuk.”",
+          n: "Hendri",
+          t: "Komunitas Mini Soccer",
+        },
+        {
+          q: "“Jadwal mingguan tim kami jadi jauh lebih rapi. Slot yang sudah dipesan langsung terkunci, jadi tidak ada lagi cerita bentrok dengan tim lain.”",
+          n: "Rizky",
+          t: "Tim Futsal Kampus",
+        },
+        {
+          q: "“Pilihan DP 50 persen sangat memudahkan. Kami bisa amankan lapangan dulu, lalu patungan pelunasan bersama teman-teman.”",
+          n: "Dimas",
+          t: "Tim Kantor",
+        },
+      ];
+      let k = 0;
+      const $ = (id) => document.getElementById(id);
+      function show() {
+        const d = T[k];
+        $("tq").textContent = d.q;
+        $("tn").textContent = d.n;
+        $("tt").textContent = d.t;
+      }
+      $("tp").onclick = () => {
+        k = (k - 1 + T.length) % T.length;
+        show();
+      };
+      $("tx").onclick = () => {
+        k = (k + 1) % T.length;
+        show();
+      };
+      show();
+    </script>
+  </body>
+</html>

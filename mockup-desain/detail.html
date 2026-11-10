@@ -1,0 +1,1053 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Detail Pesanan | ANS Mini Football</title>
+    <meta
+      name="description"
+      content="Lihat status pesanan, kode booking, dan cara pembayaran DP lapangan ANS Mini Football."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --g: #2f6b3a;
+        --g7: #265730;
+        --bg: #fbfaf3;
+        --ink: #111311;
+        --mut: #6b6e6a;
+        --bd: #e1e3dd;
+        --cream: #f3f1e4;
+        --danger: #c0392b;
+        --r-sec: 2rem;
+        --r-card: 1.5rem;
+        --shadow: 0 12px 40px rgb(17 19 17/0.14);
+        --pad: clamp(1.25rem, 3vw, 2.5rem);
+        --font: "Plus Jakarta Sans", system-ui, sans-serif;
+        --sbg: #eceae0;
+        --sfg: #4a4d49;
+      }
+      body[data-st="pending_payment"] {
+        --sbg: #fff4d6;
+        --sfg: #7a5200;
+      }
+      body[data-st="waiting_approval"] {
+        --sbg: #e3edff;
+        --sfg: #1d4ed8;
+      }
+      body[data-st="paid"] {
+        --sbg: #e1f0e4;
+        --sfg: #265730;
+      }
+      body[data-st="completed"] {
+        --sbg: #2f6b3a;
+        --sfg: #fff;
+      }
+      body[data-st="cancelled"] {
+        --sbg: #fdeaea;
+        --sfg: #a32a1f;
+      }
+      body[data-st="expired"] {
+        --sbg: #eceae0;
+        --sfg: #4a4d49;
+      }
+      * {
+        box-sizing: border-box;
+        margin: 0;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        font-family: var(--font);
+        background: var(--bg);
+        color: var(--ink);
+        -webkit-font-smoothing: antialiased;
+        line-height: 1.5;
+      }
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+      ol,
+      dl {
+        list-style: none;
+        padding: 0;
+      }
+      h1,
+      h2 {
+        line-height: 1.1;
+        letter-spacing: -0.025em;
+        text-wrap: balance;
+      }
+      h1 {
+        font-size: clamp(2rem, 4.5vw, 3.25rem);
+        font-weight: 800;
+      }
+      h2 {
+        font-size: clamp(1.15rem, 2vw, 1.4rem);
+        font-weight: 700;
+      }
+      p {
+        color: var(--mut);
+        text-wrap: pretty;
+      }
+      :focus-visible {
+        outline: 2px solid var(--g);
+        outline-offset: 3px;
+      }
+      [hidden] {
+        display: none !important;
+      }
+      .wrap {
+        max-width: 80rem;
+        margin-inline: auto;
+        padding-inline: var(--pad);
+      }
+      .i {
+        width: 1.15em;
+        height: 1.15em;
+        flex: none;
+        fill: none;
+        stroke: currentColor;
+        stroke-width: 2;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+      }
+      .sr {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        opacity: 0;
+        overflow: hidden;
+      }
+
+      /* Tombol */
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 0.35rem 0.35rem 0.35rem 1.25rem;
+        border-radius: 999px;
+        background: var(--g);
+        color: #fff;
+        font: 600 0.875rem var(--font);
+        border: 0;
+        cursor: pointer;
+        transition: background 0.2s;
+      }
+      .btn:hover:not(:disabled) {
+        background: var(--g7);
+      }
+      .btn:disabled {
+        opacity: 0.45;
+        cursor: not-allowed;
+      }
+      .btn i {
+        display: grid;
+        place-items: center;
+        width: 2.25rem;
+        height: 2.25rem;
+        border-radius: 50%;
+        background: #fff;
+        color: var(--g);
+      }
+      .btn.danger {
+        background: var(--danger);
+      }
+      .btn.danger:hover:not(:disabled) {
+        background: #a32a1f;
+      }
+      .btn.danger i {
+        color: var(--danger);
+      }
+      .back {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        padding: 0.8rem 1.25rem;
+        border-radius: 999px;
+        border: 1px solid var(--bd);
+        background: #fff;
+        font: 600 0.875rem var(--font);
+        color: var(--ink);
+        cursor: pointer;
+      }
+      .back:hover {
+        background: var(--cream);
+      }
+      .back.danger {
+        color: var(--danger);
+        border-color: #f0c9c4;
+      }
+      .back.danger:hover {
+        background: #fdeaea;
+      }
+      .cp {
+        padding: 0.25rem 0.7rem;
+        border-radius: 999px;
+        border: 1px solid var(--bd);
+        background: #fff;
+        font: 600 0.75rem var(--font);
+        color: var(--g);
+        cursor: pointer;
+      }
+      .cp:hover {
+        background: #eef5ef;
+      }
+
+      /* Navbar */
+      .nav {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        padding-block: 1.25rem;
+      }
+      .logo {
+        font-weight: 800;
+        font-size: 1.25rem;
+        letter-spacing: -0.02em;
+      }
+      .menu {
+        display: flex;
+        align-items: center;
+        gap: 2rem;
+        font-size: 0.9rem;
+        font-weight: 500;
+      }
+      .menu a:not(.btn) {
+        color: var(--mut);
+      }
+      .menu a:not(.btn):hover {
+        color: var(--ink);
+      }
+      @media (min-width: 56.01rem) {
+        .menu {
+          flex: 1;
+        }
+        .menu a:first-child,
+        .menu .btn {
+          margin-left: auto;
+        }
+      }
+      .mb {
+        display: none;
+        width: 2.75rem;
+        height: 2.75rem;
+        border-radius: 50%;
+        border: 1px solid var(--bd);
+        background: #fff;
+        place-items: center;
+        cursor: pointer;
+        color: var(--ink);
+      }
+
+      .title {
+        padding-block: clamp(1rem, 3vw, 2rem) clamp(1.25rem, 3vw, 2rem);
+      }
+      .title p {
+        margin-top: 0.75rem;
+        max-width: 34rem;
+      }
+      .layout {
+        display: grid;
+        grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
+        gap: 1rem;
+        align-items: start;
+      }
+      .panel {
+        padding: clamp(1.25rem, 3vw, 2.25rem);
+        background: #fff;
+        border-radius: var(--r-sec);
+      }
+
+      /* Kode + status */
+      .head {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+      }
+      .lbl {
+        font-size: 0.8rem;
+        font-weight: 600;
+        color: var(--mut);
+      }
+      .code {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        margin-top: 0.15rem;
+      }
+      .code strong {
+        font-size: clamp(1.5rem, 3.5vw, 2rem);
+        letter-spacing: 0.04em;
+        font-weight: 800;
+      }
+      .badge {
+        display: inline-flex;
+        align-items: center;
+        padding: 0.4rem 0.95rem;
+        border-radius: 999px;
+        background: var(--sbg);
+        color: var(--sfg);
+        font-size: 0.8rem;
+        font-weight: 700;
+      }
+      .banner {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.75rem 1.5rem;
+        margin-top: 1.25rem;
+        padding: 1.1rem 1.25rem;
+        border-radius: 1.25rem;
+        background: var(--sbg);
+        color: var(--sfg);
+      }
+      .banner h2 {
+        font-size: 1.05rem;
+      }
+      .banner p {
+        margin-top: 0.25rem;
+        font-size: 0.9rem;
+        color: inherit;
+        opacity: 0.9;
+        max-width: 32rem;
+      }
+      .cd {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.55rem 1rem;
+        border-radius: 999px;
+        background: #fff;
+        color: #7a5200;
+        font-size: 0.85rem;
+        font-weight: 600;
+      }
+      .cd b {
+        font-size: 1.1rem;
+        font-variant-numeric: tabular-nums;
+      }
+
+      /* Langkah pembayaran */
+      .pay-h {
+        margin-top: 2rem;
+      }
+      .pay {
+        counter-reset: s;
+        display: grid;
+        gap: 1rem;
+        margin-top: 1rem;
+      }
+      .pay li {
+        counter-increment: s;
+        position: relative;
+        padding-left: 2.75rem;
+        font-size: 0.95rem;
+        line-height: 1.55;
+      }
+      .pay li::before {
+        content: counter(s);
+        position: absolute;
+        left: 0;
+        top: -0.1rem;
+        display: grid;
+        place-items: center;
+        width: 2rem;
+        height: 2rem;
+        border-radius: 50%;
+        background: #eef5ef;
+        color: var(--g);
+        font-weight: 700;
+        font-size: 0.85rem;
+      }
+      .pay b {
+        font-weight: 700;
+      }
+      .info {
+        margin-top: 1.25rem;
+        padding: 0.25rem 1.25rem;
+        border: 1px solid var(--bd);
+        border-radius: 1.25rem;
+      }
+      .rows div {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        padding: 0.7rem 0;
+        border-bottom: 1px dashed var(--bd);
+        font-size: 0.9rem;
+      }
+      .rows div:last-child {
+        border-bottom: 0;
+      }
+      .rows dt {
+        color: var(--mut);
+      }
+      .rows dd {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        gap: 0.5rem;
+        font-weight: 600;
+        text-align: right;
+        overflow-wrap: anywhere;
+      }
+      .qr {
+        border-top: 1px dashed var(--bd);
+      }
+      .qr summary {
+        padding: 0.75rem 0;
+        cursor: pointer;
+        font-size: 0.9rem;
+        font-weight: 600;
+        color: var(--g);
+      }
+      .qrbox {
+        display: grid;
+        place-items: center;
+        width: min(16rem, 100%);
+        aspect-ratio: 1;
+        margin: 0.25rem auto 1rem;
+        padding: 1rem;
+        border: 2px dashed var(--bd);
+        border-radius: 1rem;
+        text-align: center;
+        font-size: 0.85rem;
+        color: var(--mut);
+      }
+      .actions {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        gap: 0.75rem;
+        margin-top: 2rem;
+      }
+
+      /* Ringkasan */
+      .summary {
+        position: sticky;
+        top: 1.5rem;
+        padding: clamp(1.25rem, 3vw, 2rem);
+        background: #fff;
+        border-radius: var(--r-sec);
+      }
+      .summary h2 {
+        margin-bottom: 0.5rem;
+      }
+      .total {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: 1rem;
+        margin-top: 1rem;
+        padding-top: 1rem;
+        border-top: 2px solid var(--bd);
+      }
+      .total strong {
+        font-size: 1.6rem;
+        letter-spacing: -0.02em;
+        color: var(--g);
+      }
+
+      /* Modal */
+      dialog {
+        width: min(28rem, calc(100% - 2rem));
+        padding: 0;
+        border: 0;
+        border-radius: var(--r-card);
+        background: #fff;
+        color: var(--ink);
+        box-shadow: var(--shadow);
+      }
+      dialog::backdrop {
+        background: rgb(17 19 17/0.5);
+      }
+      .dlg {
+        padding: 1.5rem;
+      }
+      .dlg p {
+        margin-top: 0.5rem;
+        font-size: 0.95rem;
+      }
+      .drop {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        margin-top: 1rem;
+        padding: 1rem;
+        border: 2px dashed var(--bd);
+        border-radius: 1rem;
+        cursor: pointer;
+        font-size: 0.9rem;
+        color: var(--mut);
+        overflow-wrap: anywhere;
+      }
+      .drop:hover,
+      .drop:has(:focus-visible) {
+        border-color: var(--g);
+      }
+      .drop svg {
+        color: var(--g);
+      }
+      #prev {
+        display: block;
+        width: 100%;
+        max-height: 12rem;
+        margin-top: 0.75rem;
+        object-fit: contain;
+        border-radius: 0.75rem;
+        background: var(--cream);
+      }
+      .err {
+        margin-top: 0.6rem;
+        font-size: 0.85rem;
+        color: var(--danger);
+      }
+      footer {
+        padding-block: 2.5rem;
+        font-size: 0.85rem;
+        color: var(--mut);
+      }
+
+      @media (max-width: 56rem) {
+        .mb {
+          display: grid;
+        }
+        .menu {
+          display: none;
+          position: absolute;
+          top: 100%;
+          left: var(--pad);
+          right: var(--pad);
+          flex-direction: column;
+          align-items: stretch;
+          gap: 0.25rem;
+          padding: 1rem;
+          border-radius: var(--r-card);
+          background: #fff;
+          box-shadow: var(--shadow);
+          z-index: 5;
+        }
+        .menu.open {
+          display: flex;
+        }
+        .menu a:not(.btn) {
+          padding: 0.7rem 0.5rem;
+        }
+        .menu .btn {
+          align-self: flex-start;
+          margin-top: 0.5rem;
+        }
+        .layout {
+          grid-template-columns: 1fr;
+        }
+        .summary {
+          position: static;
+        }
+      }
+      @media (max-width: 40rem) {
+        .actions > * {
+          flex: 1;
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        html {
+          scroll-behavior: auto;
+        }
+        * {
+          transition: none !important;
+        }
+      }
+    </style>
+  </head>
+  <body data-st="pending_payment">
+    <svg width="0" height="0" style="position: absolute" aria-hidden="true">
+      <symbol id="ar" viewBox="0 0 24 24">
+        <path d="M7 17 17 7M8 7h9v9" />
+      </symbol>
+      <symbol id="up" viewBox="0 0 24 24">
+        <path
+          d="M12 16V4m-5 5 5-5 5 5M4 16v3a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-3"
+        />
+      </symbol>
+      <symbol id="clk" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="9" />
+        <path d="M12 7v5l3 2" />
+      </symbol>
+      <symbol id="mn" viewBox="0 0 24 24">
+        <path d="M4 7h16M4 12h16M4 17h16" />
+      </symbol>
+    </svg>
+
+    <header class="wrap nav">
+      <a class="logo" href="/">ANS Mini Football</a>
+      <button
+        class="mb"
+        id="mb"
+        aria-expanded="false"
+        aria-controls="menu"
+        aria-label="Buka menu"
+      >
+        <svg class="i"><use href="#mn" /></svg>
+      </button>
+      <nav class="menu" id="menu" aria-label="Navigasi utama">
+        <a href="/">Home</a>
+        <a href="/pesan-lapangan">Pesan Lapangan</a>
+        <a href="/cek-pesanan">Cek Pesanan</a>
+        <a class="btn" href="#" data-wa target="_blank" rel="noopener"
+          >Hubungi Kami
+          <i
+            ><svg class="i"><use href="#ar" /></svg></i
+        ></a>
+      </nav>
+    </header>
+
+    <main class="wrap">
+      <div class="title">
+        <h1>Detail Pesanan</h1>
+      </div>
+
+      <div class="layout">
+        <section class="panel" aria-label="Status dan pembayaran">
+          <div class="head">
+            <div>
+              <div class="lbl">Kode Booking</div>
+              <div class="code">
+                <strong id="kode"></strong
+                ><button class="cp" id="cpKode" type="button">Salin</button>
+              </div>
+            </div>
+            <span class="badge" id="badge"></span>
+          </div>
+
+          <div class="banner" role="status">
+            <div>
+              <h2 id="bt"></h2>
+              <p id="bd"></p>
+            </div>
+            <div class="cd" id="cdw" hidden>
+              <svg class="i"><use href="#clk" /></svg>Sisa waktu
+              <b id="cd">30:00</b>
+            </div>
+          </div>
+
+          <h2 class="pay-h">Cara pembayaran DP</h2>
+          <ol class="pay">
+            <li>
+              Transfer DP ke rekening <b>BCA 1234567890</b> a.n.
+              <b>Mini Soccer ANS UNTAN</b> atau scan QRIS dengan nominal
+              <b id="nomT"></b>.
+            </li>
+            <li>
+              Unggah bukti transfer dengan klik tombol <b>Upload Bukti DP</b>.
+              Setelah bukti terkirim, status pesanan berubah menjadi menunggu
+              persetujuan.
+            </li>
+            <li>
+              Batas waktu unggah bukti DP adalah <b>30 menit</b> sejak kode
+              booking dibuat. Jika lewat, booking hangus.
+            </li>
+          </ol>
+
+          <div class="info">
+            <dl class="rows">
+              <div>
+                <dt>Bank</dt>
+                <dd>BCA</dd>
+              </div>
+              <div>
+                <dt>No. rekening</dt>
+                <dd>
+                  1234567890
+                  <button class="cp" type="button" data-copy="1234567890">
+                    Salin
+                  </button>
+                </dd>
+              </div>
+              <div>
+                <dt>Atas nama</dt>
+                <dd>Mini Soccer ANS UNTAN</dd>
+              </div>
+              <div>
+                <dt>Nominal DP</dt>
+                <dd>
+                  <span id="nomI"></span>
+                  <button class="cp" type="button" id="cpNom">Salin</button>
+                </dd>
+              </div>
+            </dl>
+            <details class="qr">
+              <summary>Bayar dengan QRIS</summary>
+              <!-- Ganti kotak ini dengan gambar QRIS asli: <img src="qris.png" alt="QRIS ANS Mini Football"> -->
+              <div class="qrbox">Letakkan gambar QRIS di sini</div>
+            </details>
+          </div>
+
+          <div class="actions" id="act">
+            <button class="btn" type="button" id="bUp">
+              Upload Bukti DP
+              <i
+                ><svg class="i"><use href="#up" /></svg
+              ></i>
+            </button>
+            <button class="back danger" type="button" id="bCx">Batalkan</button>
+          </div>
+        </section>
+
+        <aside class="summary" aria-label="Ringkasan pesanan">
+          <h2>Ringkasan Pesanan</h2>
+          <dl class="rows">
+            <div>
+              <dt>Lapangan</dt>
+              <dd id="v-lap"></dd>
+            </div>
+            <div>
+              <dt>Tanggal</dt>
+              <dd id="v-tgl"></dd>
+            </div>
+            <div>
+              <dt>Jam main</dt>
+              <dd id="v-jam"></dd>
+            </div>
+            <div>
+              <dt>Durasi</dt>
+              <dd id="v-dur"></dd>
+            </div>
+            <div>
+              <dt>Nama</dt>
+              <dd id="v-nama"></dd>
+            </div>
+            <div>
+              <dt>No. HP</dt>
+              <dd id="v-hp"></dd>
+            </div>
+            <div>
+              <dt>Total</dt>
+              <dd id="v-tot"></dd>
+            </div>
+            <div>
+              <dt>Sisa pembayaran</dt>
+              <dd id="v-sisa"></dd>
+            </div>
+          </dl>
+          <div class="total">
+            <span id="v-dpl">DP</span><strong id="v-dp"></strong>
+          </div>
+        </aside>
+      </div>
+    </main>
+
+    <!-- Modal upload bukti DP -->
+    <dialog id="dUp" aria-labelledby="tUp">
+      <form class="dlg" id="fUp" novalidate>
+        <h2 id="tUp">Upload Bukti DP</h2>
+        <p>
+          Unggah foto atau tangkapan layar bukti transfer sebesar
+          <b id="upNom"></b>.
+        </p>
+        <label class="drop"
+          ><svg class="i"><use href="#up" /></svg
+          ><span id="fname">Pilih file (JPG, PNG, atau PDF, maks. 5 MB)</span>
+          <input
+            class="sr"
+            type="file"
+            id="file"
+            accept="image/jpeg,image/png,application/pdf"
+        /></label>
+        <img id="prev" alt="Pratinjau bukti transfer" hidden />
+        <p class="err" id="eUp" hidden></p>
+        <div class="actions">
+          <button class="back" type="button" data-close>Batal</button>
+          <button class="btn" type="submit">
+            Kirim Bukti
+            <i
+              ><svg class="i"><use href="#ar" /></svg
+            ></i>
+          </button>
+        </div>
+      </form>
+    </dialog>
+
+    <!-- Modal konfirmasi batal -->
+    <dialog id="dCx" aria-labelledby="tCx">
+      <div class="dlg">
+        <h2 id="tCx">Batalkan pesanan?</h2>
+        <p>
+          Pesanan dengan kode <b id="cxKode"></b> akan dibatalkan dan tindakan
+          ini tidak dapat diurungkan.
+        </p>
+        <div class="actions">
+          <button class="back" type="button" data-close>Tidak</button>
+          <button class="btn danger" type="button" id="cxYes">
+            Ya, Batalkan
+            <i
+              ><svg class="i"><use href="#ar" /></svg
+            ></i>
+          </button>
+        </div>
+      </div>
+    </dialog>
+
+    <script>
+      /* ===== Konfigurasi (sesuaikan) ===== */
+      const PRICE = 150000; // harga per jam (contoh, samakan dengan halaman pesan)
+      const DP_PERCENT = 50; // persentase DP (contoh)
+      const TTL = 30 * 60 * 1000; // batas unggah bukti: 30 menit sejak kode booking dibuat
+      const WA =
+        "https://wa.me/6281234567890?text=" +
+        encodeURIComponent(
+          "Halo admin ANS Mini Football, saya ingin bertanya tentang pesanan saya.",
+        );
+      const LAP = {
+        pancasila: "Lapangan ANS Pancasila",
+        untan: "Lapangan ANS Untan",
+      };
+      const ST = {
+        pending_payment: [
+          "Menunggu Pembayaran",
+          "Belum ada pembayaran, atau bukti transfer sebelumnya ditolak admin. Selesaikan DP dan unggah bukti yang valid sebelum waktu habis.",
+        ],
+        waiting_approval: [
+          "Menunggu Persetujuan",
+          "Bukti DP sudah kami terima. Admin sedang memeriksa pembayaranmu.",
+        ],
+        paid: [
+          "Sudah Dibayar",
+          "Pembayaran DP sudah dikonfirmasi. Sampai jumpa di lapangan sesuai jadwal.",
+        ],
+        completed: [
+          "Selesai",
+          "Pesanan sudah selesai. Terima kasih sudah bermain di ANS Mini Football.",
+        ],
+        cancelled: ["Dibatalkan", "Pesanan ini sudah dibatalkan."],
+        expired: [
+          "Hangus",
+          "Pesanan hangus karena bukti DP tidak diunggah dalam 30 menit sejak kode booking dibuat.",
+        ],
+      };
+
+      const $ = (id) => document.getElementById(id),
+        pad = (n) => String(n).padStart(2, "0");
+      const rp = (n) =>
+        new Intl.NumberFormat("id-ID", {
+          style: "currency",
+          currency: "IDR",
+          maximumFractionDigits: 0,
+        }).format(n);
+      document.querySelectorAll("[data-wa]").forEach((a) => (a.href = WA));
+
+      /* Menu mobile */
+      const mb = $("mb"),
+        mn = $("menu");
+      mb.onclick = () =>
+        mb.setAttribute("aria-expanded", mn.classList.toggle("open"));
+
+      /* ===== Data pesanan =====
+   Data datang dari query string halaman pesan (lapangan, tanggal, jam, durasi, nama, hp).
+   Jika kosong, dipakai nilai contoh agar halaman tetap tampil.
+   Status dan waktu dibuat disimpan di localStorage hanya untuk demo.
+   TODO: ganti dengan data dari backend (kode, status, created_at, bukti DP).
+   Untuk pratinjau status: tambahkan ?status=paid (pending_payment, waiting_approval, paid, completed, cancelled, expired). */
+      const q = new URLSearchParams(location.search);
+      const sp = q.get("status");
+      q.delete("status");
+      const key = "ans-bk-" + q.toString();
+      const gen = () =>
+        "ANS-" +
+        Array.from(
+          { length: 6 },
+          () =>
+            "ABCDEFGHJKLMNPQRSTUVWXYZ23456789"[Math.floor(Math.random() * 32)],
+        ).join("");
+      let B = null;
+      try {
+        B = JSON.parse(localStorage.getItem(key));
+      } catch (e) {}
+      if (!B)
+        B = {
+          kode: q.get("kode") || gen(),
+          created: +q.get("dibuat") || Date.now(),
+          status: "pending_payment",
+        };
+      if (ST[sp]) {
+        B.status = sp;
+        if (sp === "pending_payment") B.created = Date.now();
+      }
+      const save = () => {
+        try {
+          localStorage.setItem(key, JSON.stringify(B));
+        } catch (e) {}
+      };
+      save();
+
+      const dur = Math.min(4, Math.max(1, +q.get("durasi") || 2));
+      const jam = parseInt(q.get("jam"), 10);
+      const j = Number.isNaN(jam) ? 19 : jam;
+      const tglStr = /^\d{4}-\d{2}-\d{2}$/.test(q.get("tanggal") || "")
+        ? q.get("tanggal")
+        : new Date().toLocaleDateString("sv-SE");
+      const total = dur * PRICE,
+        dp = Math.round((total * DP_PERCENT) / 100);
+
+      /* Isi ringkasan (statis) */
+      const txt = (id, v) => ($(id).textContent = v);
+      txt("v-lap", LAP[q.get("lapangan")] || LAP.pancasila);
+      txt(
+        "v-tgl",
+        new Date(tglStr + "T00:00").toLocaleDateString("id-ID", {
+          weekday: "long",
+          day: "numeric",
+          month: "long",
+          year: "numeric",
+        }),
+      );
+      txt("v-jam", `${pad(j)}:00 – ${pad((j + dur) % 24)}:00`);
+      txt("v-dur", dur + " jam");
+      txt("v-nama", q.get("nama") || "Budi Santoso");
+      txt("v-hp", q.get("hp") || "081234567890");
+      txt("v-tot", rp(total));
+      txt("v-sisa", rp(total - dp));
+      txt("v-dpl", `DP (${DP_PERCENT}%)`);
+      txt("v-dp", rp(dp));
+      ["nomT", "nomI", "upNom"].forEach((id) => txt(id, rp(dp)));
+      txt("cxKode", B.kode);
+      $("cpNom").dataset.copy = String(dp);
+
+      /* ===== Render status ===== */
+      function render() {
+        const s = B.status,
+          p = s === "pending_payment";
+        document.body.dataset.st = s;
+        txt("kode", B.kode);
+        $("cpKode").dataset.copy = B.kode;
+        txt("badge", ST[s][0]);
+        txt("bt", ST[s][0]);
+        txt("bd", ST[s][1]);
+        $("act").hidden = !p;
+        $("cdw").hidden = !p;
+        if (!p) {
+          $("dUp").close();
+          $("dCx").close();
+        }
+        tick();
+      }
+      function setStatus(s) {
+        B.status = s;
+        save();
+        render();
+      }
+      function tick() {
+        if (B.status !== "pending_payment") return;
+        const left = B.created + TTL - Date.now();
+        if (left <= 0) {
+          setStatus("expired");
+          return;
+        }
+        txt(
+          "cd",
+          pad(Math.floor(left / 60000)) +
+            ":" +
+            pad(Math.floor((left % 60000) / 1000)),
+        );
+      }
+      setInterval(tick, 1000);
+
+      /* Salin ke clipboard */
+      document.addEventListener("click", (e) => {
+        const b = e.target.closest("[data-copy]");
+        if (!b) return;
+        navigator.clipboard
+          ?.writeText(b.dataset.copy)
+          .then(() => {
+            b.textContent = "Tersalin";
+            setTimeout(() => (b.textContent = "Salin"), 1500);
+          })
+          .catch(() => {});
+      });
+
+      /* Modal */
+      document
+        .querySelectorAll("[data-close]")
+        .forEach((b) => (b.onclick = () => b.closest("dialog").close()));
+      const file = $("file"),
+        prev = $("prev"),
+        eUp = $("eUp");
+      const resetUp = () => {
+        file.value = "";
+        txt("fname", "Pilih file (JPG, PNG, atau PDF, maks. 5 MB)");
+        prev.hidden = true;
+        eUp.hidden = true;
+        if (prev.src.startsWith("blob:")) URL.revokeObjectURL(prev.src);
+        prev.removeAttribute("src");
+      };
+      $("bUp").onclick = () => {
+        resetUp();
+        $("dUp").showModal();
+      };
+      $("dUp").addEventListener("close", resetUp);
+      file.onchange = () => {
+        const f = file.files[0];
+        eUp.hidden = true;
+        prev.hidden = true;
+        if (!f) {
+          txt("fname", "Pilih file (JPG, PNG, atau PDF, maks. 5 MB)");
+          return;
+        }
+        txt("fname", f.name);
+        if (!["image/jpeg", "image/png", "application/pdf"].includes(f.type)) {
+          eUp.textContent = "Format file harus JPG, PNG, atau PDF.";
+          eUp.hidden = false;
+          file.value = "";
+          return;
+        }
+        if (f.size > 5 * 1024 * 1024) {
+          eUp.textContent = "Ukuran file maksimal 5 MB.";
+          eUp.hidden = false;
+          file.value = "";
+          return;
+        }
+        if (f.type.startsWith("image/")) {
+          prev.src = URL.createObjectURL(f);
+          prev.hidden = false;
+        }
+      };
+      $("fUp").onsubmit = (e) => {
+        e.preventDefault();
+        if (!file.files[0]) {
+          eUp.textContent = "Pilih file bukti transfer terlebih dahulu.";
+          eUp.hidden = false;
+          return;
+        }
+        if (B.status !== "pending_payment") {
+          $("dUp").close();
+          return;
+        }
+        // TODO: unggah file ke storage dan simpan bukti DP ke backend sebelum mengubah status
+        $("dUp").close();
+        setStatus("waiting_approval");
+      };
+      $("bCx").onclick = () => $("dCx").showModal();
+      $("cxYes").onclick = () => {
+        // TODO: kirim pembatalan ke backend
+        $("dCx").close();
+        if (B.status === "pending_payment") setStatus("cancelled");
+      };
+
+      render();
+    </script>
+  </body>
+</html>

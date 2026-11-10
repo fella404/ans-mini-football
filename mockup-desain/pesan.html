@@ -1,0 +1,979 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Pesan Lapangan | ANS Mini Football</title>
+    <meta
+      name="description"
+      content="Pilih jadwal, isi data diri, dan pesan lapangan mini football ANS secara online."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --g: #2f6b3a;
+        --g7: #265730;
+        --bg: #fbfaf3;
+        --ink: #111311;
+        --mut: #6b6e6a;
+        --bd: #e1e3dd;
+        --cream: #f3f1e4;
+        --r-sec: 2rem;
+        --r-card: 1.5rem;
+        --shadow: 0 12px 40px rgb(17 19 17/0.14);
+        --pad: clamp(1.25rem, 3vw, 2.5rem);
+        --font: "Plus Jakarta Sans", system-ui, sans-serif;
+      }
+      * {
+        box-sizing: border-box;
+        margin: 0;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        font-family: var(--font);
+        background: var(--bg);
+        color: var(--ink);
+        -webkit-font-smoothing: antialiased;
+        line-height: 1.5;
+      }
+      img {
+        display: block;
+        max-width: 100%;
+      }
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+      ol,
+      dl {
+        list-style: none;
+        padding: 0;
+      }
+      fieldset {
+        border: 0;
+        padding: 0;
+        min-width: 0;
+      }
+      h1,
+      h2 {
+        line-height: 1.1;
+        letter-spacing: -0.025em;
+        text-wrap: balance;
+      }
+      h1 {
+        font-size: clamp(2rem, 4.5vw, 3.25rem);
+        font-weight: 800;
+      }
+      h2 {
+        font-size: clamp(1.25rem, 2.2vw, 1.6rem);
+        font-weight: 700;
+      }
+      p {
+        color: var(--mut);
+        text-wrap: pretty;
+      }
+      :focus-visible {
+        outline: 2px solid var(--g);
+        outline-offset: 3px;
+      }
+      [hidden] {
+        display: none !important;
+      }
+      .wrap {
+        max-width: 80rem;
+        margin-inline: auto;
+        padding-inline: var(--pad);
+      }
+      .i {
+        width: 1.15em;
+        height: 1.15em;
+        flex: none;
+        fill: none;
+        stroke: currentColor;
+        stroke-width: 2;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+      }
+
+      /* Tombol */
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 0.35rem 0.35rem 0.35rem 1.25rem;
+        border-radius: 999px;
+        background: var(--g);
+        color: #fff;
+        font: 600 0.875rem var(--font);
+        border: 0;
+        cursor: pointer;
+        transition: background 0.2s;
+      }
+      .btn:hover:not(:disabled) {
+        background: var(--g7);
+      }
+      .btn:disabled {
+        opacity: 0.45;
+        cursor: not-allowed;
+      }
+      .btn i {
+        display: grid;
+        place-items: center;
+        width: 2.25rem;
+        height: 2.25rem;
+        border-radius: 50%;
+        background: #fff;
+        color: var(--g);
+      }
+      .back {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.8rem 1.25rem;
+        border-radius: 999px;
+        border: 1px solid var(--bd);
+        background: #fff;
+        font: 600 0.875rem var(--font);
+        cursor: pointer;
+      }
+      .back:hover {
+        background: var(--cream);
+      }
+
+      /* Navbar */
+      .nav {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        padding-block: 1.25rem;
+      }
+      .logo {
+        font-weight: 800;
+        font-size: 1.25rem;
+        letter-spacing: -0.02em;
+      }
+      .menu {
+        display: flex;
+        align-items: center;
+        gap: 2rem;
+        font-size: 0.9rem;
+        font-weight: 500;
+      }
+      .menu a:not(.btn) {
+        color: var(--mut);
+      }
+      .menu a:not(.btn):hover,
+      .menu a[aria-current] {
+        color: var(--ink);
+      }
+      .menu a[aria-current] {
+        font-weight: 700;
+      }
+      @media (min-width: 56.01rem) {
+        .menu {
+          flex: 1;
+        }
+        .menu a:first-child,
+        .menu .btn {
+          margin-left: auto;
+        }
+      }
+      .mb {
+        display: none;
+        width: 2.75rem;
+        height: 2.75rem;
+        border-radius: 50%;
+        border: 1px solid var(--bd);
+        background: #fff;
+        place-items: center;
+        cursor: pointer;
+        color: var(--ink);
+      }
+
+      /* Judul halaman */
+      .title {
+        padding-block: clamp(1rem, 3vw, 2rem) clamp(1.25rem, 3vw, 2rem);
+      }
+      .title p {
+        margin-top: 0.75rem;
+        max-width: 34rem;
+      }
+
+      /* Layout split */
+      .layout {
+        display: grid;
+        grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
+        gap: 1rem;
+        align-items: start;
+      }
+      .panel {
+        padding: clamp(1.25rem, 3vw, 2.25rem);
+        background: #fff;
+        border-radius: var(--r-sec);
+      }
+
+      /* Stepper */
+      .steps {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        margin-bottom: 2rem;
+      }
+      .steps li {
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: var(--mut);
+      }
+      .steps li:not(:last-child) {
+        flex: 1;
+      }
+      .steps li:not(:last-child)::after {
+        content: "";
+        flex: 1;
+        height: 2px;
+        min-width: 1rem;
+        background: var(--bd);
+        border-radius: 2px;
+      }
+      .dot {
+        display: grid;
+        place-items: center;
+        width: 2.25rem;
+        height: 2.25rem;
+        border-radius: 50%;
+        border: 2px solid var(--bd);
+        font-size: 0.85rem;
+        font-weight: 700;
+        flex: none;
+      }
+      .dot svg {
+        display: none;
+      }
+      .steps .on {
+        color: var(--ink);
+      }
+      .steps .on .dot {
+        background: var(--g);
+        border-color: var(--g);
+        color: #fff;
+      }
+      .steps .done {
+        color: var(--ink);
+      }
+      .steps .done .dot {
+        background: #eef5ef;
+        border-color: var(--g);
+        color: var(--g);
+      }
+      .steps .done .dot b {
+        display: none;
+      }
+      .steps .done .dot svg {
+        display: block;
+      }
+      .steps .done::after {
+        background: var(--g);
+      }
+
+      /* Form */
+      .field {
+        margin-top: 1.5rem;
+      }
+      .lab {
+        display: block;
+        margin-bottom: 0.6rem;
+        padding: 0;
+        font-weight: 600;
+        font-size: 0.9rem;
+      }
+      .in {
+        width: 100%;
+        padding: 0.85rem 1rem;
+        border: 1px solid var(--bd);
+        border-radius: 1rem;
+        background: #fff;
+        font: 500 0.95rem var(--font);
+        color: var(--ink);
+      }
+      .in:focus {
+        border-color: var(--g);
+      }
+      .err {
+        margin-top: 0.4rem;
+        font-size: 0.8rem;
+        color: #c0392b;
+      }
+      .hint {
+        font-size: 0.85rem;
+        color: var(--mut);
+      }
+      .opts {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0.75rem;
+      }
+      .opt {
+        position: relative;
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
+        padding: 0.9rem 1rem;
+        border: 1px solid var(--bd);
+        border-radius: 1rem;
+        background: #fff;
+        font-weight: 600;
+        font-size: 0.9rem;
+        cursor: pointer;
+        color: var(--ink);
+      }
+      .opt input {
+        position: absolute;
+        opacity: 0;
+        inset: 0;
+        cursor: pointer;
+      }
+      .opt:has(input:checked) {
+        border-color: var(--g);
+        background: #eef5ef;
+        color: var(--g7);
+      }
+      .opt:has(input:focus-visible) {
+        outline: 2px solid var(--g);
+        outline-offset: 3px;
+      }
+      .slots {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(7.5rem, 1fr));
+        gap: 0.5rem;
+      }
+      .slots .hint {
+        grid-column: 1/-1;
+      }
+      .slot {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 0.6rem 0.25rem;
+        border-radius: 999px;
+        border: 1px solid var(--bd);
+        background: #fff;
+        font: 600 0.875rem/1.2 var(--font);
+        color: var(--ink);
+        cursor: pointer;
+      }
+      .slot:hover:not(:disabled) {
+        border-color: var(--g);
+      }
+      .slot small {
+        font-size: 0.65rem;
+        font-weight: 500;
+      }
+      .slot:disabled {
+        background: var(--cream);
+        color: #a5a89f;
+        cursor: not-allowed;
+      }
+      .slot.on {
+        background: var(--g);
+        border-color: var(--g);
+        color: #fff;
+      }
+      .seg {
+        display: inline-flex;
+        flex-wrap: wrap;
+        gap: 0.25rem;
+        padding: 0.25rem;
+        background: var(--cream);
+        border-radius: 999px;
+      }
+      .seg button {
+        padding: 0.55rem 1.1rem;
+        border: 0;
+        border-radius: 999px;
+        background: none;
+        font: 600 0.875rem var(--font);
+        color: var(--ink);
+        cursor: pointer;
+      }
+      .seg button.on {
+        background: var(--g);
+        color: #fff;
+      }
+      .seg button:disabled {
+        opacity: 0.4;
+        cursor: not-allowed;
+      }
+      .actions {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        gap: 0.75rem;
+        margin-top: 2rem;
+      }
+      #s1 .actions {
+        justify-content: flex-end;
+      }
+
+      /* Ringkasan */
+      .summary {
+        position: sticky;
+        top: 1.5rem;
+        background: #fff;
+        border-radius: var(--r-sec);
+        overflow: hidden;
+      }
+      .sbody {
+        padding: clamp(1.25rem, 3vw, 2rem);
+      }
+      .sbody h2 {
+        margin-bottom: 0.5rem;
+      }
+      .sbody dl div {
+        display: flex;
+        justify-content: space-between;
+        gap: 1rem;
+        padding: 0.65rem 0;
+        border-bottom: 1px dashed var(--bd);
+        font-size: 0.9rem;
+      }
+      .sbody dt {
+        color: var(--mut);
+      }
+      .sbody dd {
+        font-weight: 600;
+        text-align: right;
+        overflow-wrap: anywhere;
+      }
+      .sbody dd.empty {
+        color: #a5a89f;
+        font-weight: 500;
+      }
+      .total {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: 1rem;
+        margin-top: 1rem;
+      }
+      .total strong {
+        font-size: 1.6rem;
+        letter-spacing: -0.02em;
+        color: var(--g);
+      }
+      .sbody small {
+        display: block;
+        margin-top: 0.25rem;
+        color: var(--mut);
+        font-size: 0.8rem;
+      }
+
+      footer {
+        padding-block: 2.5rem;
+        font-size: 0.85rem;
+        color: var(--mut);
+      }
+
+      @media (max-width: 56rem) {
+        .mb {
+          display: grid;
+        }
+        .menu {
+          display: none;
+          position: absolute;
+          top: 100%;
+          left: var(--pad);
+          right: var(--pad);
+          flex-direction: column;
+          align-items: stretch;
+          gap: 0.25rem;
+          padding: 1rem;
+          border-radius: var(--r-card);
+          background: #fff;
+          box-shadow: var(--shadow);
+          z-index: 5;
+        }
+        .menu.open {
+          display: flex;
+        }
+        .menu a:not(.btn) {
+          padding: 0.7rem 0.5rem;
+        }
+        .menu .btn {
+          align-self: flex-start;
+          margin-top: 0.5rem;
+        }
+        .layout {
+          grid-template-columns: 1fr;
+        }
+        .summary {
+          position: static;
+        }
+      }
+      @media (max-width: 40rem) {
+        .opts {
+          grid-template-columns: 1fr;
+        }
+        .steps {
+          gap: 0.5rem;
+        }
+        .steps li {
+          gap: 0.4rem;
+          font-size: 0.78rem;
+        }
+        .actions > * {
+          flex: 1;
+          justify-content: center;
+        }
+        #s1 .actions > * {
+          justify-content: space-between;
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        html {
+          scroll-behavior: auto;
+        }
+        * {
+          transition: none !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <svg width="0" height="0" style="position: absolute" aria-hidden="true">
+      <symbol id="ar" viewBox="0 0 24 24">
+        <path d="M7 17 17 7M8 7h9v9" />
+      </symbol>
+      <symbol id="l" viewBox="0 0 24 24">
+        <path d="M19 12H5m6-6-6 6 6 6" />
+      </symbol>
+      <symbol id="ck" viewBox="0 0 24 24">
+        <path d="m5 12.5 4.5 4.5L19 7.5" />
+      </symbol>
+      <symbol id="pin" viewBox="0 0 24 24">
+        <path d="M12 21s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11Z" />
+        <circle cx="12" cy="10" r="2.5" />
+      </symbol>
+      <symbol id="mn" viewBox="0 0 24 24">
+        <path d="M4 7h16M4 12h16M4 17h16" />
+      </symbol>
+    </svg>
+
+    <header class="wrap nav">
+      <a class="logo" href="/">ANS Mini Football</a>
+      <button
+        class="mb"
+        id="mb"
+        aria-expanded="false"
+        aria-controls="menu"
+        aria-label="Buka menu"
+      >
+        <svg class="i"><use href="#mn" /></svg>
+      </button>
+      <nav class="menu" id="menu" aria-label="Navigasi utama">
+        <a href="/">Home</a>
+        <a href="/pesan-lapangan" aria-current="page">Pesan Lapangan</a>
+        <a href="/cek-pesanan">Cek Pesanan</a>
+        <a class="btn" href="#" data-wa target="_blank" rel="noopener"
+          >Hubungi Kami
+          <i
+            ><svg class="i"><use href="#ar" /></svg></i
+        ></a>
+      </nav>
+    </header>
+
+    <main class="wrap">
+      <div class="title">
+        <h1>Pesan Lapangan</h1>
+      </div>
+
+      <div class="layout">
+        <section class="panel" aria-label="Form pemesanan">
+          <ol class="steps" id="steps" aria-label="Langkah pemesanan">
+            <li class="on">
+              <span class="dot"
+                ><b>1</b><svg class="i"><use href="#ck" /></svg></span
+              >Jadwal
+            </li>
+            <li>
+              <span class="dot"
+                ><b>2</b><svg class="i"><use href="#ck" /></svg></span
+              >Data Diri
+            </li>
+            <li>
+              <span class="dot"
+                ><b>3</b><svg class="i"><use href="#ck" /></svg></span
+              >Konfirmasi
+            </li>
+          </ol>
+
+          <!-- STEP 1: Jadwal -->
+          <form id="s1" novalidate>
+            <h2 tabindex="-1">Pilih jadwal main</h2>
+            <div class="field">
+              <label class="lab" for="tgl">Tanggal</label>
+              <input class="in" type="date" id="tgl" />
+            </div>
+            <fieldset class="field">
+              <legend class="lab">Lapangan</legend>
+              <div class="opts">
+                <label class="opt"
+                  ><input type="radio" name="lap" value="pancasila" /><svg
+                    class="i"
+                  >
+                    <use href="#pin" /></svg
+                  >Lapangan ANS Pancasila</label
+                >
+                <label class="opt"
+                  ><input type="radio" name="lap" value="untan" /><svg
+                    class="i"
+                  >
+                    <use href="#pin" /></svg
+                  >Lapangan ANS Untan</label
+                >
+              </div>
+            </fieldset>
+            <div class="field">
+              <span class="lab" id="lb-slot">Jam mulai</span>
+              <div
+                class="slots"
+                id="slots"
+                role="group"
+                aria-labelledby="lb-slot"
+              ></div>
+            </div>
+            <div class="field">
+              <span class="lab" id="lb-dur">Durasi</span>
+              <div
+                class="seg"
+                id="dur"
+                role="radiogroup"
+                aria-labelledby="lb-dur"
+              >
+                <button type="button" role="radio" data-d="1">1 Jam</button>
+                <button type="button" role="radio" data-d="2">2 Jam</button>
+                <button type="button" role="radio" data-d="3">3 Jam</button>
+                <button type="button" role="radio" data-d="4">4 Jam</button>
+              </div>
+              <p class="hint" style="margin-top: 0.5rem">
+                Maksimal 4 jam per pemesanan.
+              </p>
+            </div>
+            <div class="actions">
+              <button class="btn" type="submit" id="n1" disabled>
+                Lanjut
+                <i
+                  ><svg class="i"><use href="#ar" /></svg
+                ></i>
+              </button>
+            </div>
+          </form>
+
+          <!-- STEP 2: Data diri -->
+          <form id="s2" novalidate hidden>
+            <h2 tabindex="-1">Isi data dirimu</h2>
+            <div class="field">
+              <label class="lab" for="nama">Nama lengkap</label>
+              <input
+                class="in"
+                id="nama"
+                autocomplete="name"
+                placeholder="Contoh: Budi Santoso"
+              />
+              <p class="err" id="e-nama" hidden>
+                Masukkan nama minimal 3 karakter.
+              </p>
+            </div>
+            <div class="field">
+              <label class="lab" for="hp">Nomor HP / WhatsApp</label>
+              <input
+                class="in"
+                id="hp"
+                type="tel"
+                inputmode="tel"
+                autocomplete="tel"
+                placeholder="Contoh: 081234567890"
+              />
+              <p class="err" id="e-hp" hidden>
+                Masukkan nomor HP yang valid, misalnya 081234567890.
+              </p>
+            </div>
+            <div class="actions">
+              <button class="back" type="button" id="bk">
+                <svg class="i"><use href="#l" /></svg>Kembali
+              </button>
+              <button class="btn" type="submit" id="n2">
+                Konfirmasi Pesanan
+                <i
+                  ><svg class="i"><use href="#ar" /></svg
+                ></i>
+              </button>
+            </div>
+          </form>
+        </section>
+
+        <aside
+          class="summary"
+          aria-label="Ringkasan pesanan"
+          aria-live="polite"
+        >
+          <div class="sbody">
+            <h2>Ringkasan Pesanan</h2>
+            <dl>
+              <div>
+                <dt>Lapangan</dt>
+                <dd id="v-lap" class="empty">—</dd>
+              </div>
+              <div>
+                <dt>Tanggal</dt>
+                <dd id="v-tgl" class="empty">—</dd>
+              </div>
+              <div>
+                <dt>Jam main</dt>
+                <dd id="v-jam" class="empty">—</dd>
+              </div>
+              <div>
+                <dt>Durasi</dt>
+                <dd id="v-dur" class="empty">—</dd>
+              </div>
+              <div>
+                <dt>Nama</dt>
+                <dd id="v-nama" class="empty">—</dd>
+              </div>
+              <div>
+                <dt>No. HP</dt>
+                <dd id="v-hp" class="empty">—</dd>
+              </div>
+            </dl>
+            <div class="total">
+              <span>Estimasi total</span><strong id="v-tot">—</strong>
+            </div>
+            <small id="v-harga"></small>
+          </div>
+        </aside>
+      </div>
+    </main>
+
+    <script>
+      /* ===== Konfigurasi (sesuaikan) ===== */
+      const OPEN = 8,
+        CLOSE = 24; // jam operasional: 08:00 sampai 24:00
+      const MAX = 4; // maksimal durasi (jam)
+      const PRICE = 150000; // harga per jam (contoh)
+      const DETAIL = "/booking-detail"; // halaman booking detail (dibuat nanti)
+      const WA =
+        "https://wa.me/6281234567890?text=" +
+        encodeURIComponent(
+          "Halo admin ANS Mini Football, saya ingin bertanya tentang pemesanan lapangan.",
+        );
+      const LAP = {
+        pancasila: "Lapangan ANS Pancasila",
+        untan: "Lapangan ANS Untan",
+      };
+
+      const $ = (id) => document.getElementById(id),
+        pad = (n) => String(n).padStart(2, "0");
+      const rp = (n) =>
+        new Intl.NumberFormat("id-ID", {
+          style: "currency",
+          currency: "IDR",
+          maximumFractionDigits: 0,
+        }).format(n);
+      const today = new Date().toLocaleDateString("sv-SE");
+      const S = { tgl: today, lap: "", jam: null, dur: 1, nama: "", hp: "" };
+
+      document.querySelectorAll("[data-wa]").forEach((a) => (a.href = WA));
+      $("v-harga").textContent = rp(PRICE) + " per jam";
+
+      /* Menu mobile */
+      const mb = $("mb"),
+        mn = $("menu");
+      mb.onclick = () =>
+        mb.setAttribute("aria-expanded", mn.classList.toggle("open"));
+
+      /* Ketersediaan slot.
+   CONTOH: data "penuh" dibuat acak tetap per tanggal+lapangan.
+   Ganti isBooked() dengan data pesanan asli dari backend. */
+      function isBooked(d, l, h) {
+        let x = 0;
+        for (const c of d + l) x = (x * 31 + c.charCodeAt(0)) >>> 0;
+        return (x + h * 13) % 5 === 0;
+      }
+      const free = (h) =>
+        !(S.tgl === today && h <= new Date().getHours()) &&
+        !isBooked(S.tgl, S.lap, h);
+      const fits = (h, d) =>
+        h + d <= CLOSE &&
+        Array.from({ length: d }, (_, i) => free(h + i)).every(Boolean);
+
+      function renderSlots() {
+        const box = $("slots");
+        if (!S.tgl || !S.lap) {
+          box.innerHTML =
+            '<p class="hint">Pilih tanggal dan lapangan untuk melihat jam yang tersedia.</p>';
+          return;
+        }
+        let h = "";
+        for (let i = OPEN; i < CLOSE; i++) {
+          const off = !free(i),
+            past = S.tgl === today && i <= new Date().getHours();
+          h += `<button type="button" class="slot${S.jam === i ? " on" : ""}" data-h="${i}" aria-pressed="${S.jam === i}"${off ? " disabled" : ""}>${pad(i)}:00 – ${pad((i + 1) % 24)}:00${off ? `<small>${past ? "Lewat" : "Penuh"}</small>` : ""}</button>`;
+        }
+        box.innerHTML = h;
+      }
+      function renderDur() {
+        document.querySelectorAll("#dur button").forEach((b) => {
+          const d = +b.dataset.d;
+          b.classList.toggle("on", d === S.dur);
+          b.setAttribute("aria-checked", d === S.dur);
+          b.disabled = S.jam !== null && !fits(S.jam, d);
+        });
+      }
+      function renderSum() {
+        const set = (id, v) => {
+          const e = $(id);
+          e.textContent = v || "—";
+          e.classList.toggle("empty", !v);
+        };
+        const t = S.jam !== null;
+        set("v-lap", LAP[S.lap]);
+        set(
+          "v-tgl",
+          S.tgl &&
+            new Date(S.tgl + "T00:00").toLocaleDateString("id-ID", {
+              weekday: "long",
+              day: "numeric",
+              month: "long",
+              year: "numeric",
+            }),
+        );
+        set("v-jam", t && `${pad(S.jam)}:00 – ${pad((S.jam + S.dur) % 24)}:00`);
+        set("v-dur", t && S.dur + " jam");
+        set("v-nama", S.nama.trim());
+        set("v-hp", S.hp.trim());
+        $("v-tot").textContent = t ? rp(S.dur * PRICE) : "—";
+        $("n1").disabled = !(S.tgl && S.lap && t);
+      }
+      const refresh = () => {
+        renderSlots();
+        renderDur();
+        renderSum();
+      };
+
+      /* Navigasi step */
+      function go(n) {
+        $("s1").hidden = n !== 1;
+        $("s2").hidden = n === 1;
+        document.querySelectorAll("#steps li").forEach((li, i) => {
+          li.classList.toggle("on", i + 1 === n);
+          li.classList.toggle("done", i + 1 < n);
+        });
+        if (n < 3) {
+          const f = $(n === 1 ? "s1" : "s2");
+          f.querySelector("h2").focus({ preventScroll: true });
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        }
+      }
+
+      /* Event step 1 */
+      const tgl = $("tgl");
+      const mx = new Date();
+      mx.setDate(mx.getDate() + 60);
+      tgl.min = today;
+      tgl.max = mx.toLocaleDateString("sv-SE");
+      tgl.onchange = (e) => {
+        S.tgl = e.target.value;
+        S.jam = null;
+        refresh();
+      };
+      document.querySelectorAll("[name=lap]").forEach(
+        (r) =>
+          (r.onchange = () => {
+            S.lap = r.value;
+            S.jam = null;
+            refresh();
+          }),
+      );
+      $("slots").onclick = (e) => {
+        const b = e.target.closest("button[data-h]");
+        if (!b) return;
+        S.jam = +b.dataset.h;
+        while (S.dur > 1 && !fits(S.jam, S.dur)) S.dur--;
+        refresh();
+      };
+      $("dur").onclick = (e) => {
+        const b = e.target.closest("button");
+        if (!b || b.disabled) return;
+        S.dur = +b.dataset.d;
+        refresh();
+      };
+      $("s1").onsubmit = (e) => {
+        e.preventDefault();
+        if (!$("n1").disabled) go(2);
+      };
+
+      /* Event step 2 */
+      $("nama").oninput = (e) => {
+        S.nama = e.target.value;
+        renderSum();
+      };
+      $("hp").oninput = (e) => {
+        S.hp = e.target.value;
+        renderSum();
+      };
+      $("bk").onclick = () => go(1);
+      const hpOk = (v) =>
+        /^(\+62|62|0)8[1-9][0-9]{7,11}$/.test(v.replace(/[\s-]/g, ""));
+      $("s2").onsubmit = (e) => {
+        e.preventDefault();
+        const n = S.nama.trim().length >= 3,
+          p = hpOk(S.hp);
+        $("e-nama").hidden = n;
+        $("e-hp").hidden = p;
+        if (!n || !p) {
+          $(n ? "hp" : "nama").focus();
+          return;
+        }
+        go(3);
+        $("n2").disabled = true;
+        $("n2").firstChild.textContent = "Mengarahkan… ";
+        const prm = new URLSearchParams({
+          lapangan: S.lap,
+          tanggal: S.tgl,
+          jam: pad(S.jam) + ":00",
+          durasi: S.dur,
+          nama: S.nama.trim(),
+          hp: S.hp.replace(/[\s-]/g, ""),
+        });
+        // TODO: simpan pesanan ke backend, lalu arahkan ke halaman booking detail memakai id pesanan
+        location.href = DETAIL + "?" + prm;
+      };
+
+      /* Isi awal dari form hero (?lapangan=&tanggal=&jam=&durasi=) */
+      const q = new URLSearchParams(location.search),
+        qt = q.get("tanggal") || "";
+      if (/^\d{4}-\d{2}-\d{2}$/.test(qt) && qt >= today && qt <= tgl.max)
+        S.tgl = qt;
+      if (LAP[q.get("lapangan")]) S.lap = q.get("lapangan");
+      const qd = +q.get("durasi");
+      if (qd >= 1 && qd <= MAX) S.dur = qd;
+      const qh = parseInt(q.get("jam"), 10);
+      if (S.lap && qh >= OPEN && qh < CLOSE && fits(qh, S.dur)) S.jam = qh;
+      tgl.value = S.tgl;
+      if (S.lap)
+        document.querySelector(`[name=lap][value=${S.lap}]`).checked = true;
+      refresh();
+    </script>
+  </body>
+</html>

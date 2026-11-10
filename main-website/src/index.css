@@ -1,0 +1,184 @@
+@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap");
+@import "tailwindcss";
+
+/* ---------- 1. Token mentah (palet) ---------- */
+:root {
+  /* Hijau (primary) */
+  --green-50: #eef5ef;
+  --green-100: #d9e8dc;
+  --green-200: #b3d1b9;
+  --green-300: #86b391;
+  --green-400: #569066;
+  --green-500: #3b7a4a;
+  --green-600: #2f6b3a; /* primary */
+  --green-700: #265730;
+  --green-800: #1f4528;
+  --green-900: #163219;
+
+  /* Krem (background) */
+  --cream-50: #fdfcf8;
+  --cream-100: #fbfaf3; /* background halaman */
+  --cream-200: #f3f1e4;
+  --cream-300: #e8e5d2;
+
+  /* Netral */
+  --ink-900: #111311; /* heading */
+  --ink-700: #2b2e2b;
+  --ink-500: #6b6e6a; /* body muted */
+  --ink-300: #c9ccc6;
+  --ink-200: #e1e3dd; /* border */
+
+  /* Aksen */
+  --star: #f5b81c; /* bintang rating */
+  --danger: #d64545;
+
+  /* ---------- 2. Token semantik (shadcn) ---------- */
+  --background: var(--cream-100);
+  --foreground: var(--ink-900);
+
+  --card: #ffffff;
+  --card-foreground: var(--ink-900);
+
+  --popover: #ffffff;
+  --popover-foreground: var(--ink-900);
+
+  --primary: var(--green-600);
+  --primary-foreground: #ffffff;
+
+  --secondary: var(--green-50);
+  --secondary-foreground: var(--green-800);
+
+  --muted: var(--cream-200);
+  --muted-foreground: var(--ink-500);
+
+  --accent: var(--green-100);
+  --accent-foreground: var(--green-800);
+
+  --destructive: var(--danger);
+
+  --border: var(--ink-200);
+  --input: var(--ink-200);
+  --ring: var(--green-500);
+
+  --rating: var(--star);
+
+  /* Glass (kartu di atas foto hero) */
+  --glass-bg: rgb(255 255 255 / 0.72);
+  --glass-border: rgb(255 255 255 / 0.55);
+  --glass-blur: 16px;
+
+  /* ---------- 3. Radius ---------- */
+  --radius: 1.25rem; /* 20px, dasar */
+  --radius-section: 2rem; /* 32px, section besar */
+  --radius-card: 1.5rem; /* 24px, kartu */
+  --radius-media: 1.25rem; /* 20px, foto di dalam kartu (nested) */
+  --radius-input: 9999px; /* field search berbentuk pill */
+
+  /* ---------- 4. Shadow ---------- */
+  --shadow-soft:
+    0 1px 2px rgb(17 19 17 / 0.04), 0 8px 24px rgb(17 19 17 / 0.06);
+  --shadow-float: 0 12px 40px rgb(17 19 17 / 0.14); /* search bar melayang */
+
+  /* ---------- 5. Layout ---------- */
+  --container-max: 80rem; /* 1280px */
+  --section-gap: 1rem;
+  --section-padding-y: clamp(3rem, 6vw, 5rem);
+  --section-padding-x: clamp(1.25rem, 3vw, 2.5rem);
+  --grid-gap: 1rem;
+
+  /* ---------- 6. Tipografi ---------- */
+  --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+
+  --text-hero: clamp(2.5rem, 6vw, 4.5rem);
+  --text-h2: clamp(1.75rem, 3.2vw, 2.75rem);
+  --text-h3: clamp(1.25rem, 2vw, 1.75rem);
+  --text-body: 1rem;
+  --text-small: 0.875rem;
+  --text-stat: clamp(2.5rem, 5vw, 3.75rem); /* "94%", "4.6" */
+
+  --leading-tight: 1.1;
+  --tracking-tight: -0.025em;
+}
+
+/* ---------- Dark mode (opsional) ---------- */
+.dark {
+  --background: #0f1410;
+  --foreground: #f3f5f1;
+
+  --card: #171d18;
+  --card-foreground: #f3f5f1;
+  --popover: #171d18;
+  --popover-foreground: #f3f5f1;
+
+  --primary: #4a9a5b;
+  --primary-foreground: #0b140d;
+
+  --secondary: #1d271f;
+  --secondary-foreground: #d9e8dc;
+
+  --muted: #1d271f;
+  --muted-foreground: #9aa39b;
+
+  --accent: #243126;
+  --accent-foreground: #d9e8dc;
+
+  --border: #2a352c;
+  --input: #2a352c;
+  --ring: #4a9a5b;
+
+  --glass-bg: rgb(23 29 24 / 0.7);
+  --glass-border: rgb(255 255 255 / 0.12);
+}
+
+/* ---------- 7. Mapping ke Tailwind v4 (@theme) ---------- */
+@theme inline {
+  --font-sans: var(--font-sans);
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-rating: var(--rating);
+
+  --color-green-50: var(--green-50);
+  --color-green-100: var(--green-100);
+  --color-green-200: var(--green-200);
+  --color-green-300: var(--green-300);
+  --color-green-400: var(--green-400);
+  --color-green-500: var(--green-500);
+  --color-green-600: var(--green-600);
+  --color-green-700: var(--green-700);
+  --color-green-800: var(--green-800);
+  --color-green-900: var(--green-900);
+  --color-cream-100: var(--cream-100);
+  --color-cream-200: var(--cream-200);
+
+  --radius-sm: calc(var(--radius) - 8px);
+  --radius-md: calc(var(--radius) - 4px);
+  --radius-lg: var(--radius);
+  --radius-xl: var(--radius-card);
+  --radius-2xl: var(--radius-section);
+  --radius-media: var(--radius-media);
+
+  --shadow-soft: var(--shadow-soft);
+  --shadow-float: var(--shadow-float);
+
+  --text-hero: var(--text-hero);
+  --text-h2: var(--text-h2);
+  --text-h3: var(--text-h3);
+  --text-stat: var(--text-stat);
+}
