@@ -92,7 +92,7 @@ const AdminLayout = () => {
       >
         <div className="flex h-16 items-center gap-3 border-b border-sidebar-border px-5">
           <img
-            src="/logo-ans.png"
+            src="/admin/logo-ans.png"
             alt="ANS Mini Football"
             className="h-9 w-9 object-contain"
           />
