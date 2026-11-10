@@ -1,0 +1,11 @@
+{
+  "name": "ans-mini-football",
+  "private": true,
+  "engines": {
+    "node": "22"
+  },
+  "scripts": {
+    "build": "npm --prefix server install && npm --prefix main-website install && npm --prefix main-website run build && npm --prefix admin-panel install && npm --prefix admin-panel run build",
+    "start": "node server/src/index.js"
+  }
+}
