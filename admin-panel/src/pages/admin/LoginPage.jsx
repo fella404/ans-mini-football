@@ -115,7 +115,7 @@ const LoginPage = () => {
           </p>
 
           <img
-            src="/logo-ans.png"
+            src="/admin/logo-ans.png"
             alt="ANS Mini Football"
             className="mx-auto mt-6 block size-24 object-contain"
           />
