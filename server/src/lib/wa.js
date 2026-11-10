@@ -55,7 +55,7 @@ export function sendBookingCreated(booking) {
       summary(booking),
       `Nominal dibayar: ${rp(booking.amount_due)}`,
       "Segera unggah bukti pembayaran dalam 30 menit:",
-      `${config.appUrl}/booking-detail/${booking.booking_code}`,
+      `${config.appUrl}/booking-detail?kode=${booking.booking_code}`,
     ].join("\n"),
   );
 }
