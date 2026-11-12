@@ -1,7 +1,8 @@
 import { body, param, query } from 'express-validator';
 
 const TIME_REGEX = /^([01]\d|2[0-3]):[0-5]\d(:[0-5]\d)?$/;
-const PHONE_REGEX = /^(0|62)8\d{7,12}$/;
+// 08xx / 628xx, total 11-13 digit
+const PHONE_REGEX = /^(08\d{9,11}|628\d{8,10})$/;
 const DATE_REGEX = /^\d{4}-\d{2}-\d{2}$/;
 
 const codeParam = param('booking_code')
@@ -14,7 +15,12 @@ const bookingFields = [
   body('play_date').matches(DATE_REGEX).withMessage('Tanggal tidak valid (YYYY-MM-DD)'),
   body('start_time').matches(TIME_REGEX).withMessage('Jam mulai tidak valid (HH:MM)'),
   body('duration_hours').isInt({ min: 1, max: 4 }).withMessage('Durasi harus 1-4 jam'),
-  body('customer_name').trim().notEmpty().withMessage('Nama wajib diisi'),
+  body('customer_name')
+    .trim()
+    .notEmpty()
+    .withMessage('Nama wajib diisi')
+    .isLength({ min: 3 })
+    .withMessage('Nama minimal 3 karakter'),
 ];
 
 export const createBookingValidator = [
@@ -22,7 +28,7 @@ export const createBookingValidator = [
   body('customer_phone')
     .trim()
     .matches(PHONE_REGEX)
-    .withMessage('No HP tidak valid, gunakan format 08xx atau 628xx'),
+    .withMessage('No HP tidak valid (11-13 digit), gunakan format 08xx atau 628xx'),
   body('payment_type').isIn(['full', 'dp']).withMessage('Tipe bayar harus full atau dp'),
 ];
 
@@ -32,7 +38,7 @@ export const walkInValidator = [
     .optional({ values: 'falsy' })
     .trim()
     .matches(PHONE_REGEX)
-    .withMessage('No HP tidak valid, gunakan format 08xx atau 628xx'),
+    .withMessage('No HP tidak valid (11-13 digit), gunakan format 08xx atau 628xx'),
 ];
 
 export const availabilityValidator = [

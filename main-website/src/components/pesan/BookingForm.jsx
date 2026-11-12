@@ -16,7 +16,7 @@ const MAX_DATE = (() => {
 })();
 const MAX_DURATION = 4;
 const DURATIONS = [1, 2, 3, 4];
-const PHONE_OK = (v) => /^(0|62)8\d{7,12}$/.test(v.replace(/[\s-]/g, ""));
+const PHONE_OK = (v) => /^(08\d{9,11}|628\d{8,10})$/.test(v.replace(/[\s-]/g, ""));
 
 const hourOf = (time) => parseInt(time.slice(0, 2), 10);
 
@@ -197,7 +197,7 @@ const BookingForm = () => {
     const next = {};
     if (name.trim().length < 3) next.name = "Masukkan nama minimal 3 karakter.";
     if (!PHONE_OK(phone))
-      next.phone = "Masukkan nomor HP yang valid, misalnya 081234567890.";
+      next.phone = "Masukkan nomor HP yang valid (11-13 digit), misalnya 081234567890.";
     setErrors(next);
     return Object.keys(next).length === 0;
   };
